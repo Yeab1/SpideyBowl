@@ -1,0 +1,17 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class DestinationController : MonoBehaviour
+{
+    void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.GetComponent<BowlController>())
+        {
+            // Until there is a win screen, this should just reload the scene
+            // when players win.
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+    }
+}
