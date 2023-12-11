@@ -120,7 +120,7 @@ public class BowlController : MonoBehaviour
 
     void updateIsMoving()
     {
-        isMoving = _rb.velocity.magnitude > movementThreshold;
+        isMoving = Mathf.Abs(_rb.velocity.x) > movementThreshold;
     }
 
     void updateGrounded()
@@ -168,6 +168,7 @@ public class BowlController : MonoBehaviour
                 float timer = 0f;
 
                 float totalCountdownSize = countdownGracePeriod + countdownSize;
+                bool shouldGameEnd = true;
                 while (timer < totalCountdownSize)
                 {
                     timer += Time.deltaTime;
@@ -181,11 +182,19 @@ public class BowlController : MonoBehaviour
                     }
                     
                     yield return null; // Yield to the next frame
+
+                    // if it starts moving again, stop counting down
+                    if (isMoving)
+                    {
+                        shouldGameEnd = false;
+                        countDownUI.gameObject.SetActive(false);
+                        break;
+                    }
                 }
 
                 // If the object has been static for over countdownSize seconds,
                 // restart the scene
-                gameOver();
+                if (shouldGameEnd) gameOver();
             }
 
             // Wait for the next frame before checking again
