@@ -17,13 +17,17 @@ public class BowlController : MonoBehaviour
     public float jumpForce = 5f;
     public float playerHeight = 1f;
     public int maxJumps;
+    public int maxDashes;
+    public float dashForce = 5f;
 
     // State Tracking
     public int coinCount;
     public int jumpsLeft;
+    public int dashesLeft;
     private bool isPlayerGrounded;
 
     public bool canDoubleJump = false;
+    public bool canDash = false;
 
     private void Awake()
     {
@@ -62,9 +66,15 @@ public class BowlController : MonoBehaviour
             _distanceJoint.enabled = false;
             _lineRenderer.enabled = false;
         }
+
         if (Input.GetKeyDown(KeyCode.Space) && canPlayerJump())
         {
             jump();
+        }
+
+        if (Input.GetKeyDown(KeyCode.D) && canPlayerDash())
+        {
+            dash();
         }
 
         if (_distanceJoint.enabled)
@@ -85,7 +95,15 @@ public class BowlController : MonoBehaviour
         if (jumpsLeft > 1 && canDoubleJump) return true;
         return false;
     }
-    
+
+    bool canPlayerDash()
+    {
+        // if on the ground, reset dashes
+        if (isPlayerGrounded) return false;
+        if (dashesLeft > 1 && canDash) return true;
+        return false;
+    }
+
     void updateGrounded()
     {
         isPlayerGrounded = Physics2D.Raycast(transform.position,
@@ -93,8 +111,12 @@ public class BowlController : MonoBehaviour
             playerHeight,
             LayerMask.GetMask("Ground"));
 
-        // reset jumps if necessary
-        if (isPlayerGrounded) jumpsLeft = maxJumps;
+        // reset jumps and dashes if necessary
+        if (isPlayerGrounded)
+        {
+            jumpsLeft = maxJumps;
+            dashesLeft = maxDashes;
+        }
     }
 
     bool isGrappleOnBlock(Vector2 mousePos) {
@@ -107,5 +129,11 @@ public class BowlController : MonoBehaviour
     {
         _rb.velocity = new Vector2(_rb.velocity.x, jumpForce);
         jumpsLeft--;
+    }
+
+    void dash() {
+        // apply a force to the right
+        _rb.velocity = new Vector2(1 * dashForce, _rb.velocity.y);
+        dashesLeft--;
     }
 }
