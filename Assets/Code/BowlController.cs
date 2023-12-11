@@ -1,7 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class BowlController : MonoBehaviour
 {
@@ -12,6 +12,7 @@ public class BowlController : MonoBehaviour
     public DistanceJoint2D _distanceJoint;
     public Rigidbody2D _rb;
     public TMP_Text coinsUI;
+    public TMP_Text countDownUI;
 
     public float InitialSpeed = 10f;
     public float jumpForce = 5f;
@@ -20,11 +21,19 @@ public class BowlController : MonoBehaviour
     public int maxDashes;
     public float dashForce = 5f;
 
+    // outlets for countdown
+    private float movementThreshold = 0.05f;
+    public float countdownSize;
+    // give players a grace period before showing countdown timer.
+    public float countdownGracePeriod;
+
+
     // State Tracking
     public int coinCount;
     public int jumpsLeft;
     public int dashesLeft;
     private bool isPlayerGrounded;
+    private bool isMoving = true;
 
     public bool canDoubleJump = false;
     public bool canDash = false;
@@ -40,6 +49,9 @@ public class BowlController : MonoBehaviour
         _distanceJoint.enabled = false;
         _rb = GetComponent<Rigidbody2D>();
         _rb.velocity = Vector2.right * InitialSpeed;
+
+        // start the coroutine to check if bowl is static
+        StartCoroutine(checkStaticState());
     }
 
     // Update is called once per frame
@@ -52,7 +64,8 @@ public class BowlController : MonoBehaviour
             Vector2 mousePos =
                 (Vector2)mainCamera.ScreenToWorldPoint(Input.mousePosition);
 
-            if (isGrappleOnBlock(mousePos)) {
+            if (isGrappleOnBlock(mousePos))
+            {
                 _lineRenderer.SetPosition(0, mousePos);
                 _lineRenderer.SetPosition(1, transform.position);
                 _distanceJoint.connectedAnchor =
@@ -82,10 +95,11 @@ public class BowlController : MonoBehaviour
             _lineRenderer.SetPosition(1, transform.position);
         }
 
-        Debug.DrawRay(transform.position, Vector2.down * playerHeight);
+        // Debug.DrawRay(transform.position, Vector2.down * playerHeight);
 
         // update groundedness state
         updateGrounded();
+        updateIsMoving();
     }
 
     bool canPlayerJump()
@@ -104,6 +118,11 @@ public class BowlController : MonoBehaviour
         return false;
     }
 
+    void updateIsMoving()
+    {
+        isMoving = _rb.velocity.magnitude > movementThreshold;
+    }
+
     void updateGrounded()
     {
         isPlayerGrounded = Physics2D.Raycast(transform.position,
@@ -119,9 +138,10 @@ public class BowlController : MonoBehaviour
         }
     }
 
-    bool isGrappleOnBlock(Vector2 mousePos) {
+    bool isGrappleOnBlock(Vector2 mousePos)
+    {
         return Physics2D.Raycast(transform.position,
-            (mousePos - (Vector2)transform.position).normalized,
+        (mousePos - (Vector2)transform.position).normalized,
             Mathf.Infinity, LayerMask.GetMask("AttachableObject"));
     }
 
@@ -131,9 +151,51 @@ public class BowlController : MonoBehaviour
         jumpsLeft--;
     }
 
-    void dash() {
+    void dash()
+    {
         // apply a force to the right
         _rb.velocity = new Vector2(1 * dashForce, _rb.velocity.y);
         dashesLeft--;
+    }
+
+    IEnumerator checkStaticState()
+    {
+        while (true)
+        {
+            if (!isMoving)
+            {
+                // If it's not moving, start measuring time
+                float timer = 0f;
+
+                float totalCountdownSize = countdownGracePeriod + countdownSize;
+                while (timer < totalCountdownSize)
+                {
+                    timer += Time.deltaTime;
+
+                    if (timer > countdownGracePeriod)
+                    {
+                        int countdown = Mathf.CeilToInt(
+                            totalCountdownSize - timer);
+                        countDownUI.gameObject.SetActive(true);
+                        countDownUI.text = countdown.ToString();
+                    }
+                    
+                    yield return null; // Yield to the next frame
+                }
+
+                // If the object has been static for over countdownSize seconds,
+                // restart the scene
+                gameOver();
+            }
+
+            // Wait for the next frame before checking again
+            countDownUI.gameObject.SetActive(false);
+            yield return null;
+        }
+    }
+
+    void gameOver()
+    {
+        SceneManager.LoadScene("GameOver");
     }
 }

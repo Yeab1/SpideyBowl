@@ -9,7 +9,7 @@ public class OutOfBound : MonoBehaviour
     {
         if (other.gameObject.GetComponent<BowlController>())
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            SceneManager.LoadScene("GameOver");
         }
     }
 }

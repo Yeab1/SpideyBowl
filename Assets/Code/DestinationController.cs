@@ -9,9 +9,7 @@ public class DestinationController : MonoBehaviour
     {
         if (other.gameObject.GetComponent<BowlController>())
         {
-            // Until there is a win screen, this should just reload the scene
-            // when players win.
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            SceneManager.LoadScene("win");
         }
     }
 }
