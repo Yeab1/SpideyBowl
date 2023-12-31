@@ -16,7 +16,7 @@ public class BowlController : MonoBehaviour
 
     public float InitialSpeed = 10f;
     public float jumpForce = 5f;
-    public float playerHeight = 1f;
+    public float playerHeight = 1.5f;
     public int maxJumps;
     public int maxDashes;
     public float dashForce = 5f;
@@ -95,7 +95,7 @@ public class BowlController : MonoBehaviour
             _lineRenderer.SetPosition(1, transform.position);
         }
 
-        // Debug.DrawRay(transform.position, Vector2.down * playerHeight);
+        Debug.DrawRay(transform.position, Vector2.down * playerHeight);
 
         // update groundedness state
         updateGrounded();
@@ -133,6 +133,7 @@ public class BowlController : MonoBehaviour
         // reset jumps and dashes if necessary
         if (isPlayerGrounded)
         {
+            Debug.Log("grounded");
             jumpsLeft = maxJumps;
             dashesLeft = maxDashes;
         }
