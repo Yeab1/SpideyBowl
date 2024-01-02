@@ -20,6 +20,7 @@ public class BowlController : MonoBehaviour
     public int maxJumps;
     public int maxDashes;
     public float dashForce = 5f;
+    Animator animator;
 
     // outlets for countdown
     private float movementThreshold = 0.05f;
@@ -34,7 +35,7 @@ public class BowlController : MonoBehaviour
     public int dashesLeft;
     private bool isPlayerGrounded;
     private bool isMoving = true;
-
+    public static bool isInDangerZone = false;
     public bool canDoubleJump = false;
     public bool canDash = false;
 
@@ -49,9 +50,13 @@ public class BowlController : MonoBehaviour
         _distanceJoint.enabled = false;
         _rb = GetComponent<Rigidbody2D>();
         _rb.velocity = Vector2.right * InitialSpeed;
+        animator = GetComponent<Animator>();
 
         // start the coroutine to check if bowl is static
         StartCoroutine(checkStaticState());
+
+        // update in air animation parameter
+        animator.SetBool("IsoffGround", false);
     }
 
     // Update is called once per frame
@@ -130,12 +135,25 @@ public class BowlController : MonoBehaviour
             playerHeight,
             LayerMask.GetMask("Ground"));
 
+        // Update the idle animation to in-air animation if 
+        // necessary.
+        if (animator.GetBool("IsoffGround") != !isPlayerGrounded)
+        {
+            animator.SetBool("IsoffGround", !isPlayerGrounded);
+        }
+        if (animator.GetBool("IsInDangerZone") != isInDangerZone)
+        {
+            animator.SetBool("IsInDangerZone", isInDangerZone);
+        }
+
         // reset jumps and dashes if necessary
         if (isPlayerGrounded)
         {
-            Debug.Log("grounded");
+            
             jumpsLeft = maxJumps;
             dashesLeft = maxDashes;
+            // no longer in danger zone for animation
+            isInDangerZone = false;
         }
     }
 

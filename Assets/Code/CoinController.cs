@@ -4,16 +4,12 @@ using UnityEngine;
 
 public class CoinController : MonoBehaviour
 {
-    // Start is called before the first frame update
+    Animator animator;
+
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        animator = GetComponent<Animator>();
+        animator.SetBool("isCollected", false);
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -21,7 +17,20 @@ public class CoinController : MonoBehaviour
         if (other.gameObject.GetComponent<BowlController>())
         {
             BowlController.instance.coinCount++;
-            Destroy(gameObject);
+            Debug.Log("here");
+            StartCoroutine(DestroyAfterAnimation());
         }
+    }
+
+    IEnumerator DestroyAfterAnimation()
+    {
+        animator.SetBool("isCollected", true);
+        Debug.Log("starting animation");
+
+        // Wait for the animation duration
+        yield return new WaitForSecondsRealtime(animator.runtimeAnimatorController.animationClips[0].length);
+
+        Debug.Log("Destroying");
+        Destroy(gameObject);
     }
 }
