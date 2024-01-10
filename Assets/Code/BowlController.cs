@@ -105,6 +105,9 @@ public class BowlController : MonoBehaviour
         // update groundedness state
         updateGrounded();
         updateIsMoving();
+
+        // update animation for dash (hot)
+        animator.SetBool("IsHot", canDash);
     }
 
     bool canPlayerJump()
