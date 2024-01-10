@@ -38,7 +38,6 @@ public class BowlController : MonoBehaviour
     public static bool isInDangerZone = false;
     public bool canDoubleJump = false;
     public bool canDash = false;
-
     private void Awake()
     {
         instance = this;
@@ -164,7 +163,7 @@ public class BowlController : MonoBehaviour
     {
         return Physics2D.Raycast(transform.position,
         (mousePos - (Vector2)transform.position).normalized,
-            Mathf.Infinity, LayerMask.GetMask("AttachableObject"));
+            4, LayerMask.GetMask("AttachableObject"));
     }
 
     void jump()
