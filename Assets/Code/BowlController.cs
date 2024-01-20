@@ -170,7 +170,7 @@ public class BowlController : MonoBehaviour
             RaycastHit2D[] hits = Physics2D.RaycastAll(
                 transform.position, 
                 rayDirection, 
-                20f, 
+                10f, 
                 LayerMask.GetMask("AttachableObject"));
 
             GameObject closestAttachableObject = null;
