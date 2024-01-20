@@ -16,7 +16,7 @@ public class BowlController : MonoBehaviour
 
     public float InitialSpeed = 10f;
     public float jumpForce = 5f;
-    public float playerHeight = 1.5f;
+    public float playerHeight = 0.7f;
     public int maxJumps;
     public int maxDashes;
     public float dashForce = 5f;
@@ -62,22 +62,10 @@ public class BowlController : MonoBehaviour
     void Update()
     {
         coinsUI.text = coinCount.ToString();
-
-        if (Input.GetKeyDown(KeyCode.Mouse0) && !isPlayerGrounded)
-        {
-            Vector2 mousePos =
-                (Vector2)mainCamera.ScreenToWorldPoint(Input.mousePosition);
-
-            if (isGrappleOnBlock(mousePos))
-            {
-                _lineRenderer.SetPosition(0, mousePos);
-                _lineRenderer.SetPosition(1, transform.position);
-                _distanceJoint.connectedAnchor =
-                    (Vector2)mainCamera.ScreenToWorldPoint(Input.mousePosition);
-                _distanceJoint.enabled = true;
-                _lineRenderer.enabled = true;
-            }
+        if (Input.GetKeyDown(KeyCode.Mouse0) && !isPlayerGrounded) {
+            grappleOnClosestBlock();
         }
+
         else if (Input.GetKeyUp(KeyCode.Mouse0))
         {
             _distanceJoint.enabled = false;
@@ -163,7 +151,57 @@ public class BowlController : MonoBehaviour
     {
         return Physics2D.Raycast(transform.position,
         (mousePos - (Vector2)transform.position).normalized,
-            4, LayerMask.GetMask("AttachableObject"));
+            20, LayerMask.GetMask("AttachableObject"));
+    }
+
+    void grappleOnClosestBlock()
+    {
+        int rayCount = 10; // Number of rays in the cone
+        float coneAngle = 90f; // Total angle of the cone
+        float stepAngle = coneAngle / (float)(rayCount - 1);
+
+        for (int i = 0; i < rayCount; i++)
+        {
+            // Calculate the current ray direction based on the iteration
+            float angle = -coneAngle / 2f + i * stepAngle;
+            Vector2 rayDirection = 
+                Quaternion.Euler(0, 0, angle) * Vector2.right;
+
+            RaycastHit2D[] hits = Physics2D.RaycastAll(
+                transform.position, 
+                rayDirection, 
+                20f, 
+                LayerMask.GetMask("AttachableObject"));
+
+            GameObject closestAttachableObject = null;
+            float closestDistance = Mathf.Infinity;
+
+            foreach (RaycastHit2D hit in hits)
+            {
+                float distance = Vector2.Distance(
+                    transform.position, 
+                    hit.transform.position);
+
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestAttachableObject = hit.transform.gameObject;
+                }
+            }
+
+            // Check if there is a hit and grapple on the object
+            if (closestAttachableObject != null)
+            {
+                Vector2 anchorPoint = new Vector2(closestAttachableObject.transform.position.x, closestAttachableObject.transform.position.y - 2f);
+                _lineRenderer.SetPosition(
+                    0, anchorPoint);
+                _lineRenderer.SetPosition(
+                    1, transform.position);
+                _distanceJoint.connectedAnchor = anchorPoint;
+                _distanceJoint.enabled = true;
+                _lineRenderer.enabled = true;
+            }
+        }
     }
 
     void jump()
@@ -200,6 +238,11 @@ public class BowlController : MonoBehaviour
                             totalCountdownSize - timer);
                         countDownUI.gameObject.SetActive(true);
                         countDownUI.text = countdown.ToString();
+
+                        // being under countdown should also mean being in
+                        // danger zone
+                        isInDangerZone = true;
+
                     }
                     
                     yield return null; // Yield to the next frame
@@ -209,11 +252,14 @@ public class BowlController : MonoBehaviour
                     {
                         shouldGameEnd = false;
                         countDownUI.gameObject.SetActive(false);
+
+                        // should also remove danger zone animation
+                        isInDangerZone = false;
                         break;
                     }
                 }
 
-                // If the object has been static for over countdownSize seconds,
+                // If the object has been static for over countdownSize seconds
                 // restart the scene
                 if (shouldGameEnd) gameOver();
             }
