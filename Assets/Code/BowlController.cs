@@ -69,8 +69,7 @@ public class BowlController : MonoBehaviour
 
         else if (Input.GetKeyUp(KeyCode.Mouse0))
         {
-            _distanceJoint.enabled = false;
-            _lineRenderer.enabled = false;
+            cutNoodle();
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && canPlayerJump())
@@ -78,8 +77,7 @@ public class BowlController : MonoBehaviour
             if (_distanceJoint.enabled) {
                 jump(jumpForce * 1.2f);
                 // cutt off the noodle if player jumps off of it
-                _distanceJoint.enabled = false;
-                _lineRenderer.enabled = false;
+                cutNoodle();
             } else {
                 jump(jumpForce);
             }
@@ -279,6 +277,14 @@ public class BowlController : MonoBehaviour
             countDownUI.gameObject.SetActive(false);
             yield return null;
         }
+    }
+
+    void cutNoodle() {
+        _distanceJoint.enabled = false;
+        _lineRenderer.enabled = false;
+
+        // if done swinging, should be in air so shouldn't have jumps left
+        jumpsLeft = 0;
     }
 
     void gameOver()
