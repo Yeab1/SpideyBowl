@@ -20,7 +20,7 @@ public class DoubleJumpController : MonoBehaviour
     {
         if (other.gameObject.GetComponent<BowlController>())
         {
-            BowlController.instance.canDoubleJump = true;
+            BowlController.instance.maxJumps = 2;
             Destroy(gameObject);
         }
     }

@@ -17,8 +17,7 @@ public class BowlController : MonoBehaviour
     public float InitialSpeed = 10f;
     public float jumpForce = 5f;
     public float playerHeight = 0.7f;
-    public int maxJumps;
-    public int maxDashes;
+    public int maxJumps = 1;
     public float dashForce = 5f;
     Animator animator;
 
@@ -32,11 +31,9 @@ public class BowlController : MonoBehaviour
     // State Tracking
     public int coinCount;
     public int jumpsLeft;
-    public int dashesLeft;
     private bool isPlayerGrounded;
     private bool isMoving = true;
     public static bool isInDangerZone = false;
-    public bool canDoubleJump = false;
     public bool canDash = false;
     private void Awake()
     {
@@ -61,6 +58,10 @@ public class BowlController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // update groundedness state
+        updateGrounded();
+        updateIsMoving();
+
         coinsUI.text = coinCount.ToString();
         if (Input.GetKeyDown(KeyCode.Mouse0) && !isPlayerGrounded) {
             grappleOnClosestBlock();
@@ -74,7 +75,14 @@ public class BowlController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && canPlayerJump())
         {
-            jump();
+            if (_distanceJoint.enabled) {
+                jump(jumpForce * 1.2f);
+                // cutt off the noodle if player jumps off of it
+                _distanceJoint.enabled = false;
+                _lineRenderer.enabled = false;
+            } else {
+                jump(jumpForce);
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.D) && canPlayerDash())
@@ -89,10 +97,6 @@ public class BowlController : MonoBehaviour
 
         Debug.DrawRay(transform.position, Vector2.down * playerHeight);
 
-        // update groundedness state
-        updateGrounded();
-        updateIsMoving();
-
         // update animation for dash (hot)
         animator.SetBool("IsHot", canDash);
     }
@@ -101,7 +105,7 @@ public class BowlController : MonoBehaviour
     {
         // if on the ground, reset jumps
         if (isPlayerGrounded) return true;
-        if (jumpsLeft > 1 && canDoubleJump) return true;
+        if (jumpsLeft != 0) return true;
         return false;
     }
 
@@ -109,7 +113,7 @@ public class BowlController : MonoBehaviour
     {
         // if on the ground, reset dashes
         if (isPlayerGrounded) return false;
-        if (dashesLeft > 1 && canDash) return true;
+        if (canDash) return true;
         return false;
     }
 
@@ -118,12 +122,10 @@ public class BowlController : MonoBehaviour
         isMoving = Mathf.Abs(_rb.velocity.x) > movementThreshold;
     }
 
+    // Updates grounded status for animations
     void updateGrounded()
     {
-        isPlayerGrounded = Physics2D.Raycast(transform.position,
-            Vector2.down,
-            playerHeight,
-            LayerMask.GetMask("Ground"));
+        isPlayerGrounded = isGrounded();
 
         // Update the idle animation to in-air animation if 
         // necessary.
@@ -139,19 +141,16 @@ public class BowlController : MonoBehaviour
         // reset jumps and dashes if necessary
         if (isPlayerGrounded)
         {
-            
-            jumpsLeft = maxJumps;
-            dashesLeft = maxDashes;
             // no longer in danger zone for animation
             isInDangerZone = false;
         }
     }
 
-    bool isGrappleOnBlock(Vector2 mousePos)
-    {
+    bool isGrounded() {
         return Physics2D.Raycast(transform.position,
-        (mousePos - (Vector2)transform.position).normalized,
-            20, LayerMask.GetMask("AttachableObject"));
+            Vector2.down,
+            playerHeight,
+            LayerMask.GetMask("Ground"));
     }
 
     void grappleOnClosestBlock()
@@ -200,21 +199,33 @@ public class BowlController : MonoBehaviour
                 _distanceJoint.connectedAnchor = anchorPoint;
                 _distanceJoint.enabled = true;
                 _lineRenderer.enabled = true;
+                jumpsLeft = 1;
             }
         }
     }
 
-    void jump()
+    void jump(float force)
     {
-        _rb.velocity = new Vector2(_rb.velocity.x, jumpForce);
+        if (isGrounded()) {
+            jumpsLeft = maxJumps;
+        } else if (_distanceJoint.enabled) {
+            jumpsLeft = 1;
+        }
         jumpsLeft--;
+        _rb.velocity = new Vector2(_rb.velocity.x, force);
     }
 
     void dash()
     {
         // apply a force to the right
         _rb.velocity = new Vector2(1 * dashForce, _rb.velocity.y);
-        dashesLeft--;
+        canDash = false;
+
+        // remove the pepper
+        // currently, the pepper is the only child so it will be at idx 1
+        Transform pepperTransform = transform.GetChild(0);
+        GameObject pepperGameObject = pepperTransform.gameObject;
+        pepperGameObject.SetActive(false);
     }
 
     IEnumerator checkStaticState()
