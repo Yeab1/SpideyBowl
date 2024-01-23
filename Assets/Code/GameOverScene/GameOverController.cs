@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class WinController : MonoBehaviour
+public class GameOverController : MonoBehaviour
 {
-    public static WinController instance;
+    public static GameOverController instance;
 
     // Outlets
     public GameObject restartBtn;
@@ -15,8 +15,8 @@ public class WinController : MonoBehaviour
         instance = this;
     }
 
-    public void restartGame()
+    public void restartLevel()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("level-" + GameDataController.currentLevel);
     }
 }

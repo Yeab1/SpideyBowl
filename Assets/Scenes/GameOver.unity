@@ -471,7 +471,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1212146949}
         m_TargetAssemblyTypeName: GameOverController, Assembly-CSharp
-        m_MethodName: restartGame
+        m_MethodName: restartLevel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

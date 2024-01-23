@@ -3,20 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameOverController : MonoBehaviour
+public class WinController : MonoBehaviour
 {
-    public static GameOverController instance;
+    public static WinController instance;
 
     // Outlets
     public GameObject restartBtn;
+    public GameObject nextLevelBtn;
 
     private void Awake()
     {
         instance = this;
     }
 
-    public void restartGame()
+    public void restartLevel()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("level-" + GameDataController.currentLevel);
+    }
+
+    public void nextLevel() 
+    {
+        if (GameDataController.currentLevel != GameDataController.lastLevel) {
+            GameDataController.currentLevel++;
+            SceneManager.LoadScene("Level-" + GameDataController.currentLevel);
+        }
     }
 }

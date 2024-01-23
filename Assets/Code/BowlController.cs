@@ -153,8 +153,8 @@ public class BowlController : MonoBehaviour
 
     void grappleOnClosestBlock()
     {
-        int rayCount = 10; // Number of rays in the cone
-        float coneAngle = 90f; // Total angle of the cone
+        int rayCount = 15; // Number of rays in the cone
+        float coneAngle = 110f; // Total angle of the cone
         float stepAngle = coneAngle / (float)(rayCount - 1);
 
         for (int i = 0; i < rayCount; i++)
