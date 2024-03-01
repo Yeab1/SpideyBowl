@@ -17,6 +17,10 @@ public class GameOverController : MonoBehaviour
 
     public void restartLevel()
     {
-        SceneManager.LoadScene("level-" + GameDataController.currentLevel);
+        SceneManager.LoadScene("level-" + GameDataController.getLevel());
+    }
+
+    public void returnHome() {
+        SceneManager.LoadScene("Home");
     }
 }

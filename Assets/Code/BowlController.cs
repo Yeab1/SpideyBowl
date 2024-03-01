@@ -13,6 +13,7 @@ public class BowlController : MonoBehaviour
     public Rigidbody2D _rb;
     public TMP_Text coinsUI;
     public TMP_Text countDownUI;
+    public TMP_Text levelDisplay;
 
     public float InitialSpeed = 10f;
     public float jumpForce = 5f;
@@ -35,6 +36,7 @@ public class BowlController : MonoBehaviour
     private bool isMoving = true;
     public static bool isInDangerZone = false;
     public bool canDash = false;
+    public bool isPaused = false;
     private void Awake()
     {
         instance = this;
@@ -53,11 +55,19 @@ public class BowlController : MonoBehaviour
 
         // update in air animation parameter
         animator.SetBool("IsoffGround", false);
+
+        // display the level
+        Debug.Log("" + levelDisplay.text);
+        levelDisplay.text = "Level " + GameDataController.getLevel();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (isPaused) {
+            return;
+        }
         // update groundedness state
         updateGrounded();
         updateIsMoving();
@@ -97,6 +107,11 @@ public class BowlController : MonoBehaviour
 
         // update animation for dash (hot)
         animator.SetBool("IsHot", canDash);
+
+        // check for pause
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            MenuController.instance.show();
+        }
     }
 
     bool canPlayerJump()

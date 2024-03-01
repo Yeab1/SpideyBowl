@@ -14,18 +14,23 @@ public class WinController : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        if (GameDataController.getLevel() == GameDataController.getLastLevel()) {
+            nextLevelBtn.SetActive(false);
+        }
     }
 
     public void restartLevel()
     {
-        SceneManager.LoadScene("level-" + GameDataController.currentLevel);
+        SceneManager.LoadScene("level-" + GameDataController.getLevel());
     }
 
     public void nextLevel() 
     {
-        if (GameDataController.currentLevel != GameDataController.lastLevel) {
-            GameDataController.currentLevel++;
-            SceneManager.LoadScene("Level-" + GameDataController.currentLevel);
-        }
+        GameDataController.incrementLevel();
+        SceneManager.LoadScene("Level-" + GameDataController.getLevel());
+    }
+
+    public void returnHome() {
+        SceneManager.LoadScene("Home");
     }
 }
