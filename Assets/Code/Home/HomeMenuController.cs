@@ -9,7 +9,6 @@ public class HomeMenuController : MonoBehaviour
 
     // Outlets
     public GameObject HomeMenu;
-    public GameObject SettingsMenu;
     public GameObject LevelsMenu;
     void Awake()
     {
@@ -29,13 +28,8 @@ public class HomeMenuController : MonoBehaviour
         SwitchMenu(LevelsMenu);
     }
 
-    public void ShowSettingsMenu () {
-        SwitchMenu(SettingsMenu);
-    }
-
     void SwitchMenu (GameObject menu) {
         HomeMenu.SetActive(false);
-        SettingsMenu.SetActive(false);
         LevelsMenu.SetActive(false);
 
         menu.SetActive(true);

@@ -9,7 +9,6 @@ public class MenuController : MonoBehaviour
 
     // Outlets
     public GameObject pauseMenu;
-    public GameObject settingsMenu;
     void Awake()
     {
         instance = this;
@@ -26,8 +25,6 @@ public class MenuController : MonoBehaviour
 
     public void hide() {
         pauseMenu.SetActive(false);
-        settingsMenu.SetActive(false);
-
         Time.timeScale = 1.0f;
         // this function also runs on Awake at which point Bowl Controller
         // may not have been initialized yet.
@@ -41,13 +38,8 @@ public class MenuController : MonoBehaviour
         SwitchMenu(pauseMenu);
     }
 
-    public void ShowSettingsMenu () {
-        SwitchMenu(settingsMenu);
-    }
-
     void SwitchMenu (GameObject menu) {
         pauseMenu.SetActive(false);
-        settingsMenu.SetActive(false);
         menu.SetActive(true);
     }
 
