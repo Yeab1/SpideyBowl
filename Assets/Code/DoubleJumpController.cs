@@ -8,7 +8,7 @@ public class DoubleJumpController : MonoBehaviour
     {
         if (other.gameObject.GetComponent<BowlController>())
         {
-            BowlController.instance.maxJumps = 2;
+            BowlController.instance.hasCollectedJumpToken = true;
             Destroy(gameObject);
         }
     }

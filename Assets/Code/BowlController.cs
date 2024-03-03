@@ -18,7 +18,6 @@ public class BowlController : MonoBehaviour
     public float InitialSpeed = 10f;
     public float jumpForce = 5f;
     public float playerHeight = 0.7f;
-    public int maxJumps = 1;
     public float dashForce = 5f;
     Animator animator;
 
@@ -31,7 +30,7 @@ public class BowlController : MonoBehaviour
 
     // State Tracking
     public int coinCount;
-    public int jumpsLeft;
+    public bool hasCollectedJumpToken;
     private bool isPlayerGrounded;
     private bool isMoving = true;
     public static bool isInDangerZone = false;
@@ -88,6 +87,7 @@ public class BowlController : MonoBehaviour
                 // cutt off the noodle if player jumps off of it
                 cutNoodle();
             } else {
+                hasCollectedJumpToken = false;
                 jump(jumpForce);
             }
         }
@@ -115,10 +115,8 @@ public class BowlController : MonoBehaviour
 
     bool canPlayerJump()
     {
-        // if on the ground, reset jumps
-        if (isPlayerGrounded) return true;
-        if (jumpsLeft != 0) return true;
-        return false;
+        // player can jump if on the ground, has a single use jump token or is grappling
+        return isPlayerGrounded || hasCollectedJumpToken || _lineRenderer.enabled;
     }
 
     bool canPlayerDash()
@@ -211,19 +209,12 @@ public class BowlController : MonoBehaviour
                 _distanceJoint.connectedAnchor = anchorPoint;
                 _distanceJoint.enabled = true;
                 _lineRenderer.enabled = true;
-                jumpsLeft = 1;
             }
         }
     }
 
     void jump(float force)
     {
-        if (isGrounded()) {
-            jumpsLeft = maxJumps;
-        } else if (_distanceJoint.enabled) {
-            jumpsLeft = 1;
-        }
-        jumpsLeft--;
         _rb.velocity = new Vector2(_rb.velocity.x, force);
     }
 
@@ -296,9 +287,6 @@ public class BowlController : MonoBehaviour
     void cutNoodle() {
         _distanceJoint.enabled = false;
         _lineRenderer.enabled = false;
-
-        // if done swinging, should be in air so shouldn't have jumps left
-        jumpsLeft = 0;
     }
 
     public void gameOver()
