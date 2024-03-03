@@ -5,12 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class ResetLevel : MonoBehaviour
 {
-    public static ResetLevel instance;
-
-    // private void Awake()
-    // {
-    //     instance = this;
-    // }
     public void restartLevel()
     {
         SceneManager.LoadScene("level-" + GameDataController.getLevel());

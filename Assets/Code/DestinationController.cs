@@ -9,6 +9,9 @@ public class DestinationController : MonoBehaviour
     {
         if (other.gameObject.GetComponent<BowlController>())
         {
+            // update the total coin count to display on Win screen
+            GameDataController.updateCurrentLevelCoins(BowlController.instance.coinCount);
+            GameDataController.updateTotalCoins();
             SceneManager.LoadScene("win");
         }
     }

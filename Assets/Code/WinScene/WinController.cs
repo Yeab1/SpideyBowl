@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using UnityEngine.SceneManagement;
 
 public class WinController : MonoBehaviour
@@ -8,11 +9,17 @@ public class WinController : MonoBehaviour
     public static WinController instance;
 
     // Outlets
-    public GameObject restartBtn;
     public GameObject nextLevelBtn;
+    public TMP_Text currentLevelCoinsUI;
+    public TMP_Text totalCoinsUI;
 
     private void Awake()
     {
+        int currentCoins = GameDataController.getCurrentLevelCoins();
+        int totalCoins = GameDataController.getTotalCoins();
+        currentLevelCoinsUI.text = "" + currentCoins;
+        totalCoinsUI.text = "" + totalCoins;
+
         instance = this;
         if (GameDataController.getLevel() == GameDataController.getLastLevel()) {
             nextLevelBtn.SetActive(false);
@@ -21,6 +28,7 @@ public class WinController : MonoBehaviour
 
     public void restartLevel()
     {
+        GameDataController.revertTotalCoinUpdate();
         SceneManager.LoadScene("level-" + GameDataController.getLevel());
     }
 

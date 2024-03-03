@@ -7,9 +7,6 @@ public class OutOfBound : MonoBehaviour
 {
     void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.GetComponent<BowlController>())
-        {
-            SceneManager.LoadScene("GameOver");
-        }
+        BowlController.instance.gameOver();
     }
 }

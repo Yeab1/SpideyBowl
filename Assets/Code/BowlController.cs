@@ -57,7 +57,6 @@ public class BowlController : MonoBehaviour
         animator.SetBool("IsoffGround", false);
 
         // display the level
-        Debug.Log("" + levelDisplay.text);
         levelDisplay.text = "Level " + GameDataController.getLevel();
         
     }
@@ -103,7 +102,7 @@ public class BowlController : MonoBehaviour
             _lineRenderer.SetPosition(1, transform.position);
         }
 
-        Debug.DrawRay(transform.position, Vector2.down * playerHeight);
+        // Debug.DrawRay(transform.position, Vector2.down * playerHeight);
 
         // update animation for dash (hot)
         animator.SetBool("IsHot", canDash);
@@ -302,8 +301,9 @@ public class BowlController : MonoBehaviour
         jumpsLeft = 0;
     }
 
-    void gameOver()
+    public void gameOver()
     {
+        // Update the global total coin count to show on the game over screen
         SceneManager.LoadScene("GameOver");
     }
 }
