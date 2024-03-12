@@ -33,7 +33,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -15.51, y: -0.2, z: 0.38078}
-  m_LocalScale: {x: 0.23844677, y: 0.23844677, z: 0.23844677}
+  m_LocalScale: {x: 0.25108445, y: 0.25108445, z: 0.25108445}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -294,19 +294,17 @@ MonoBehaviour:
   _rb: {fileID: 0}
   coinsUI: {fileID: 0}
   countDownUI: {fileID: 0}
+  levelDisplay: {fileID: 0}
   InitialSpeed: 10
   jumpForce: 5
   playerHeight: 1
-  maxJumps: 2
-  maxDashes: 2
   dashForce: 20
   countdownSize: 3
   countdownGracePeriod: 2
   coinCount: 0
-  jumpsLeft: 0
-  dashesLeft: 0
-  canDoubleJump: 0
+  hasCollectedJumpToken: 0
   canDash: 0
+  isPaused: 0
 --- !u!95 &7353269022030540981
 Animator:
   serializedVersion: 5

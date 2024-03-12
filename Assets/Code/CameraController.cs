@@ -1,22 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class CameraController : MonoBehaviour
 {
     public static CameraController instance;
-    public Transform target;
-
-    public Vector3 offset;
-    public float smoothness;
+    public CinemachineVirtualCamera virtualCamera;
     public bool startZoom;
-    public float initialFOV;
-    public float desiredFOV;
+    public float initialOrthoSize;
+    public float desiredOrthoSize;
     public float zoomSpeed;
-    public float currentFOV;
-    bool isZoomingOut;
-
-    Vector3 _velocity;
+    public float currentOrthoSize;
+    public bool isZoomingOut;
 
     private void Awake()
     {
@@ -24,35 +18,33 @@ public class CameraController : MonoBehaviour
     }
     
     void Start() {
-        if (target) {
-            offset = transform.position - target.position;
-            currentFOV = Camera.main.orthographicSize;
+        if (virtualCamera != null)
+        {
+            // Access the lens settings of the virtual camera
+            currentOrthoSize = virtualCamera.m_Lens.OrthographicSize;
         }
     }
 
     void Update() {
-        transform.position = Vector3.SmoothDamp(
-            transform.position,
-            target.position + offset,
-            ref _velocity,
-            smoothness
-        );
-
         if (startZoom)
         {
             if (isZoomingOut) {
-                currentFOV += Time.deltaTime * zoomSpeed;
-                currentFOV = Mathf.Clamp(currentFOV, initialFOV, desiredFOV);
-                Camera.main.orthographicSize = currentFOV;
-                if (currentFOV >= desiredFOV)
+                // zoom out
+                currentOrthoSize = Mathf.Lerp(currentOrthoSize, desiredOrthoSize, Time.deltaTime * zoomSpeed);
+                virtualCamera.m_Lens.OrthographicSize = currentOrthoSize;
+
+                // finished zooming?
+                if (Mathf.Approximately(currentOrthoSize, desiredOrthoSize))
                 {
                     startZoom = false;
-                }
+                } 
             } else {
-                currentFOV -= Time.deltaTime * zoomSpeed;
-                currentFOV = Mathf.Clamp(currentFOV, desiredFOV, initialFOV);
-                Camera.main.orthographicSize = currentFOV;
-                if (currentFOV <= desiredFOV)
+                // zoom in
+                currentOrthoSize = Mathf.Lerp(currentOrthoSize, desiredOrthoSize, Time.deltaTime * zoomSpeed);
+                virtualCamera.m_Lens.OrthographicSize = currentOrthoSize;
+
+                // finished zooming?
+                if (Mathf.Approximately(currentOrthoSize, desiredOrthoSize))
                 {
                     startZoom = false;
                 }
@@ -61,16 +53,16 @@ public class CameraController : MonoBehaviour
     }
 
     public void zoomOut(float FOVChangeAmount, float zoomSpeed) {
-        initialFOV = currentFOV; 
-        desiredFOV = initialFOV + FOVChangeAmount;
+        initialOrthoSize = currentOrthoSize; 
+        desiredOrthoSize = initialOrthoSize + FOVChangeAmount;
         this.zoomSpeed = zoomSpeed;
         startZoom = true;
         isZoomingOut = true;
     }
 
     public void zoomIn(float FOVChangeAmount, float zoomSpeed) {
-        initialFOV = currentFOV; 
-        desiredFOV = initialFOV - FOVChangeAmount;
+        initialOrthoSize = currentOrthoSize; 
+        desiredOrthoSize = initialOrthoSize - FOVChangeAmount;
         this.zoomSpeed = zoomSpeed;
         startZoom = true;
         isZoomingOut = false;
