@@ -36,7 +36,7 @@ public class HomeMenuController : MonoBehaviour
     }
 
     public void StartGame() {
-        SceneManager.LoadScene("Level-1");
+        SceneManager.LoadScene("Level-" + GameDataController.getLevel());
     }
 
     public void StartLevel (int level) {
