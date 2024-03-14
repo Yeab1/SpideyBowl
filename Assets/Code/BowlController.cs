@@ -74,10 +74,13 @@ public class BowlController : MonoBehaviour
         coinsUI.text = coinCount.ToString();
         if (Input.GetKeyDown(KeyCode.Mouse0) && !isPlayerGrounded) {
             grappleOnClosestBlock();
+        } 
+        else if (Input.GetKeyUp(KeyCode.Mouse0)) {
+            cutNoodle();
         }
 
-        else if (Input.GetKeyUp(KeyCode.Mouse0))
-        {
+        // if player hits ground while grappling, cut the grapple off.
+        if (isGrounded() && _lineRenderer.enabled) {
             cutNoodle();
         }
 
@@ -294,8 +297,24 @@ public class BowlController : MonoBehaviour
         _rb.velocity = Vector2.zero;
     }
 
-    public Animator getAnimator() {
-        return animator;
+    public void breakBowl() {
+        animator.SetBool("IsBroken", true);
+        StartCoroutine(PlayAnimationThenChangeScene());
+    }
+
+    IEnumerator PlayAnimationThenChangeScene()
+    {
+        Debug.Log("breaking0: " + animator.GetBool("IsBroken"));
+        BowlController.instance.stopBowl();
+
+        // Wait for animation to start
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Broken_Idle") &&
+                                           animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0f);
+        Debug.Log("breaking");
+        // Wait until the animation is complete
+        yield return new WaitForSeconds(1f);
+
+        BowlController.instance.gameOver();
     }
 
     public void gameOver()

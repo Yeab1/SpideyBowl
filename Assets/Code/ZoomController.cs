@@ -12,12 +12,10 @@ public class ZoomController : MonoBehaviour
         if (other.gameObject.GetComponent<BowlController>())
         {
             
-            if (isZoomOut){
-                Debug.Log("Trying to zoom out");
-                CameraController.instance.zoomOut(zoomAmount, zoomSpeed);}
-            else{
-                Debug.Log("Trying to zoom in");
-                CameraController.instance.zoomIn(zoomAmount, zoomSpeed);}
+            if (isZoomOut)
+                CameraController.instance.zoomOut(zoomAmount, zoomSpeed);
+            else
+                CameraController.instance.zoomIn(zoomAmount, zoomSpeed);
         }
     }
 }

@@ -720,10 +720,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Floor (2)
       objectReference: {fileID: 0}
-    - target: {fileID: 6972009123845616137, guid: 3ecac893ea23440849300d3e8557d1e9, type: 3}
-      propertyPath: m_SortingOrder
-      value: -1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -970,10 +966,6 @@ PrefabInstance:
     - target: {fileID: 3049564998991160844, guid: 3ecac893ea23440849300d3e8557d1e9, type: 3}
       propertyPath: m_Name
       value: Floor (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 6972009123845616137, guid: 3ecac893ea23440849300d3e8557d1e9, type: 3}
-      propertyPath: m_SortingOrder
-      value: -1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1263,10 +1255,6 @@ PrefabInstance:
     - target: {fileID: 3049564998991160844, guid: 3ecac893ea23440849300d3e8557d1e9, type: 3}
       propertyPath: m_Name
       value: Floor
-      objectReference: {fileID: 0}
-    - target: {fileID: 6972009123845616137, guid: 3ecac893ea23440849300d3e8557d1e9, type: 3}
-      propertyPath: m_SortingOrder
-      value: -1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
