@@ -78,7 +78,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 88b25688369da4adc98449130c332280, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -299,6 +299,7 @@ MonoBehaviour:
   jumpForce: 5
   playerHeight: 1
   dashForce: 20
+  animator: {fileID: 0}
   countdownSize: 3
   countdownGracePeriod: 2
   coinCount: 0

@@ -11,13 +11,9 @@ public class CameraController : MonoBehaviour
     public float zoomSpeed;
     public float currentOrthoSize;
     public bool isZoomingOut;
-
-    private void Awake()
-    {
-        instance = this;
-    }
     
     void Start() {
+        instance = this;
         if (virtualCamera != null)
         {
             // Access the lens settings of the virtual camera

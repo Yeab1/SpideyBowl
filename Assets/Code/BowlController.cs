@@ -47,6 +47,7 @@ public class BowlController : MonoBehaviour
         _distanceJoint.enabled = false;
         _rb = GetComponent<Rigidbody2D>();
         _rb.velocity = Vector2.right * InitialSpeed;
+
         animator = GetComponent<Animator>();
 
         // start the coroutine to check if bowl is static
@@ -287,6 +288,14 @@ public class BowlController : MonoBehaviour
     void cutNoodle() {
         _distanceJoint.enabled = false;
         _lineRenderer.enabled = false;
+    }
+
+    public void stopBowl() {
+        _rb.velocity = Vector2.zero;
+    }
+
+    public Animator getAnimator() {
+        return animator;
     }
 
     public void gameOver()
