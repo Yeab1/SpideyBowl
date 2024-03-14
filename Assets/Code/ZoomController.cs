@@ -16,6 +16,8 @@ public class ZoomController : MonoBehaviour
                 CameraController.instance.zoomOut(zoomAmount, zoomSpeed);
             else
                 CameraController.instance.zoomIn(zoomAmount, zoomSpeed);
+            
+            Destroy(gameObject);
         }
     }
 }
