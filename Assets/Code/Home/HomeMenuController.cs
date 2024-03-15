@@ -13,6 +13,8 @@ public class HomeMenuController : MonoBehaviour
     void Awake()
     {
         instance = this;
+    }
+    void Start() {
         show();
     }
 
@@ -29,6 +31,7 @@ public class HomeMenuController : MonoBehaviour
     }
 
     void SwitchMenu (GameObject menu) {
+        SoundManager.instance.PlayButtonClickSound();
         HomeMenu.SetActive(false);
         LevelsMenu.SetActive(false);
 
@@ -36,10 +39,12 @@ public class HomeMenuController : MonoBehaviour
     }
 
     public void StartGame() {
+        SoundManager.instance.PlayButtonClickSound();
         SceneManager.LoadScene("Level-" + GameDataController.getLevel());
     }
 
     public void StartLevel (int level) {
+        SoundManager.instance.PlayButtonClickSound();
         SceneManager.LoadScene("Level-" + level);
         GameDataController.setLevel(level);
     }

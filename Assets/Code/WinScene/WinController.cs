@@ -25,7 +25,6 @@ public class WinController : MonoBehaviour
             nextLevelBtn.SetActive(false);
         }
     }
-
     public void restartLevel()
     {
         GameDataController.revertTotalCoinUpdate();

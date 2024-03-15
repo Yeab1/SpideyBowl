@@ -8,6 +8,7 @@ public class DoubleJumpController : MonoBehaviour
     {
         if (other.gameObject.GetComponent<BowlController>())
         {
+            SoundManager.instance.PlayDoubleJumpTokenCollectSound();
             BowlController.instance.hasCollectedJumpToken = true;
             Destroy(gameObject);
         }

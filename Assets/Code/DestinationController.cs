@@ -12,6 +12,8 @@ public class DestinationController : MonoBehaviour
             // update the total coin count to display on Win screen
             GameDataController.updateCurrentLevelCoins(BowlController.instance.coinCount);
             GameDataController.updateTotalCoins();
+
+            SoundManager.instance.PlayWinSound();
             SceneManager.LoadScene("win");
         }
     }

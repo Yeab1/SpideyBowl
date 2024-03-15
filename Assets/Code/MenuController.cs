@@ -39,11 +39,13 @@ public class MenuController : MonoBehaviour
     }
 
     void SwitchMenu (GameObject menu) {
+        SoundManager.instance.PlayButtonClickSound();
         pauseMenu.SetActive(false);
         menu.SetActive(true);
     }
 
     public void returnHome() {
+        SoundManager.instance.PlayButtonClickSound();
         SceneManager.LoadScene("Home");
     }
 }
