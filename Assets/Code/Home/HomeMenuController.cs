@@ -10,6 +10,7 @@ public class HomeMenuController : MonoBehaviour
     // Outlets
     public GameObject HomeMenu;
     public GameObject LevelsMenu;
+    public GameObject SettingsMenu;
     void Awake()
     {
         instance = this;
@@ -29,11 +30,15 @@ public class HomeMenuController : MonoBehaviour
     public void ShowLevelsMenu () {
         SwitchMenu(LevelsMenu);
     }
+    public void ShowSettingssMenu () {
+        SwitchMenu(SettingsMenu);
+    }
 
     void SwitchMenu (GameObject menu) {
         SoundManager.instance.PlayButtonClickSound();
         HomeMenu.SetActive(false);
         LevelsMenu.SetActive(false);
+        SettingsMenu.SetActive(false);
 
         menu.SetActive(true);
     }

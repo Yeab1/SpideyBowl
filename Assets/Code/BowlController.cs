@@ -306,13 +306,11 @@ public class BowlController : MonoBehaviour
 
     IEnumerator PlayAnimationThenChangeScene()
     {
-        Debug.Log("breaking0: " + animator.GetBool("IsBroken"));
         BowlController.instance.stopBowl();
 
         // Wait for animation to start
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Broken_Idle") &&
                                            animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0f);
-        Debug.Log("breaking");
         // Wait until the animation is complete
         yield return new WaitForSeconds(1f);
 

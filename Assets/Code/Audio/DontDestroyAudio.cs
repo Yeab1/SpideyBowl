@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class DontDestroyAudio : MonoBehaviour
 {
-    private static DontDestroyAudio instance;
+    public static DontDestroyAudio instance;
+    AudioSource audioSource;
 
     void Awake()
     {
+        audioSource = GetComponent<AudioSource>();
         if (instance == null)
         {
             instance = this;
@@ -17,5 +19,15 @@ public class DontDestroyAudio : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+    void Start() {
+        audioSource = GetComponent<AudioSource>();
+    }
+
+    public void updateMusicVolume(float value) {
+        audioSource.volume = value;
+    }
+    public float getVolume() {
+        return audioSource.volume;
     }
 }
