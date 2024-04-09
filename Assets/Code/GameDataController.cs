@@ -6,7 +6,7 @@ public class GameDataController : MonoBehaviour
 {
     public static GameDataController instance;
     static int currentLevel = 1;
-    static int lastLevel = 6;
+    static int lastLevel = 10;
     static int total_coins = 0;
     static int current_level_coins = 0;
 
