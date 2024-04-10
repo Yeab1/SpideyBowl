@@ -17,7 +17,6 @@ public class DestinationController : MonoBehaviour
     {
         // Update the total coin count to display on the Win screen
         GameDataController.updateCurrentLevelCoins(BowlController.instance.coinCount);
-        GameDataController.updateTotalCoins();
 
         // Play win sound
         SoundManager.instance.PlayWinSound();

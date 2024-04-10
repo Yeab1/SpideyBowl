@@ -45,6 +45,16 @@ public class HomeMenuController : MonoBehaviour
 
     public void StartGame() {
         SoundManager.instance.PlayButtonClickSound();
+
+        // start from where player left off
+        ProgressData progress = ProgressDataManager.LoadProgress();
+        if (progress == null) {
+            // if there is no progress, start from level 1
+            GameDataController.setLevel(1);
+        } else {
+            GameDataController.setLevel(progress.get_current_level());
+        }
+
         SceneManager.LoadScene("Level-" + GameDataController.getLevel());
     }
 

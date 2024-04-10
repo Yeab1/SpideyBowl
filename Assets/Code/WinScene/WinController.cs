@@ -11,23 +11,37 @@ public class WinController : MonoBehaviour
     // Outlets
     public GameObject nextLevelBtn;
     public TMP_Text currentLevelCoinsUI;
-    public TMP_Text totalCoinsUI;
+    public TMP_Text stars_collected_UI;
+    public TMP_Text total_stars_collected_UI;
+
+    public float three_star_threshold = 0.9f;
+    public float two_star_threshold = 0.6f;
 
     private void Awake()
     {
         int currentCoins = GameDataController.getCurrentLevelCoins();
-        int totalCoins = GameDataController.getTotalCoins();
         currentLevelCoinsUI.text = "" + currentCoins;
-        totalCoinsUI.text = "" + totalCoins;
 
         instance = this;
         if (GameDataController.getLevel() == GameDataController.getLastLevel()) {
             nextLevelBtn.SetActive(false);
         }
+
+        int awarded_stars = award_stars(currentCoins);
+        CoinsPerLevel.set_collected_stars(GameDataController.getLevel(), awarded_stars);
+
+        stars_collected_UI.text = "" + awarded_stars;
+        total_stars_collected_UI.text = "" + CoinsPerLevel.get_total_stars();
+
+        // Saving current level + 1 because we want the player to return to the next level
+        // when they return not back to the one they just won
+        ProgressData progress = new ProgressData(
+                                        CoinsPerLevel.get_all_collected_stars(), 
+                                        GameDataController.getLevel() + 1);
+        ProgressDataManager.SaveProgress(progress);                                
     }
     public void restartLevel()
     {
-        GameDataController.revertTotalCoinUpdate();
         SceneManager.LoadScene("level-" + GameDataController.getLevel());
     }
 
@@ -39,5 +53,16 @@ public class WinController : MonoBehaviour
 
     public void returnHome() {
         SceneManager.LoadScene("Home");
+    }
+
+    public int award_stars(int coins_collected) {
+        int total_possible_coins = CoinsPerLevel.get_total_coins(GameDataController.getLevel());
+        if (coins_collected >= total_possible_coins * three_star_threshold) {
+            return 3;
+        } else if (coins_collected >= total_possible_coins * two_star_threshold) {
+            return 2;
+        } else {
+            return 1;
+        }
     }
 }
