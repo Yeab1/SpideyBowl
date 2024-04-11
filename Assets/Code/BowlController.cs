@@ -61,9 +61,6 @@ public class BowlController : MonoBehaviour
 
         // initialize the total coins for each level
         CoinsPerLevel.initialize_coins_per_level();
-
-        // initialize the player's star collection progress
-        CoinsPerLevel.load_star_progress();
     }
 
     // Update is called once per frame

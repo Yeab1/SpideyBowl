@@ -14,6 +14,8 @@ public class HomeMenuController : MonoBehaviour
     void Awake()
     {
         instance = this;
+        // initialize the player's star collection progress
+        CoinsPerLevel.load_star_progress();
     }
     void Start() {
         show();
@@ -58,9 +60,16 @@ public class HomeMenuController : MonoBehaviour
         SceneManager.LoadScene("Level-" + GameDataController.getLevel());
     }
 
-    public void StartLevel (int level) {
+    public static void StartLevel (int level) {
         SoundManager.instance.PlayButtonClickSound();
-        SceneManager.LoadScene("Level-" + level);
         GameDataController.setLevel(level);
+        SceneManager.LoadScene("Level-" + level);
+    }
+
+    // TODO: Delete for release
+    // for debugging purposes only. Don't forget to remove 
+    // the clear progress button in settings
+    public void clearAllProgress() {
+        CoinsPerLevel.clear_all_progress();
     }
 }

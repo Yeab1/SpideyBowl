@@ -34,7 +34,6 @@ public class CoinsPerLevel : MonoBehaviour
         } else {
             collected_stars_per_level = progress.get_collected_stars_per_level();
         }
-        
     }
 
     public static void set_collected_stars(int level, int collected_stars) {
@@ -58,5 +57,16 @@ public class CoinsPerLevel : MonoBehaviour
             sum += collected_stars_per_level[i];
         }
         return sum;
+    }
+
+    public static void clear_all_progress() {
+        collected_stars_per_level = new int[GameDataController.getLastLevel()];
+        ProgressData progress = new ProgressData(collected_stars_per_level, 1);
+        ProgressDataManager.SaveProgress(progress);
+        load_star_progress();
+
+        // reset UI on level select window after clearing process
+        LevelSelect.instance.destroy_all_level_prefabs();
+        LevelSelect.instance.setup_level_select_grid();
     }
 }
