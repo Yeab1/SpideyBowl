@@ -22,7 +22,7 @@ public class SlipperyGroundController : MonoBehaviour
     {
         if (other.gameObject.GetComponent<BowlController>())
         {
-            SoundManager.instance.PlaySlipSound();
+            SoundEffectsManager.instance.PlaySlipSound();
             BowlController.instance._rb.velocity = Vector2.right * slipSpeed;
         }
     }

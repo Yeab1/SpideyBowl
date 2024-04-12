@@ -251,7 +251,7 @@ public class BowlController : MonoBehaviour
 
     void jump(float force)
     {
-        SoundManager.instance.PlayJumpSound();
+        SoundEffectsManager.instance.PlayJumpSound();
         _rb.velocity = new Vector2(_rb.velocity.x, force);
     }
 
@@ -332,7 +332,7 @@ public class BowlController : MonoBehaviour
 
     public void breakBowl() {
         animator.SetBool("IsBroken", true);
-        SoundManager.instance.PlayBowlBreakSound();
+        SoundEffectsManager.instance.PlayBowlBreakSound();
         StartCoroutine(PlayAnimationThenChangeScene());
     }
 
@@ -351,7 +351,7 @@ public class BowlController : MonoBehaviour
 
     public void gameOver()
     {
-        SoundManager.instance.PlayLossSound();
+        SoundEffectsManager.instance.PlayLossSound();
         // Update the global total coin count to show on the game over screen
         SceneManager.LoadScene("GameOver");
     }

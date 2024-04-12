@@ -17,7 +17,7 @@ public class CoinController : MonoBehaviour
         if (other.gameObject.GetComponent<BowlController>())
         {
             BowlController.instance.coinCount++;
-            SoundManager.instance.PlayCoinCollectSound();
+            SoundEffectsManager.instance.PlayCoinCollectSound();
             StartCoroutine(DestroyAfterAnimation());
         }
     }

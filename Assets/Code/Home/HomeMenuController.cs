@@ -15,7 +15,17 @@ public class HomeMenuController : MonoBehaviour
     {
         instance = this;
         // initialize the player's star collection progress
-        CoinsPerLevel.load_star_progress();
+        CoinsPerLevel.load_progress();
+
+        // initialize settings
+        AudioSettingsData audio_settings = ProgressDataManager.LoadAudioSettings();
+        if (audio_settings != null) {
+            SoundManager.initialize_volume(
+                        audio_settings.get_sfx_volume(), 
+                        audio_settings.get_bg_volume());
+        } else {
+            SoundManager.initialize_volume(0.2f, 0.2f);
+        }
     }
     void Start() {
         show();
@@ -37,7 +47,7 @@ public class HomeMenuController : MonoBehaviour
     }
 
     void SwitchMenu (GameObject menu) {
-        SoundManager.instance.PlayButtonClickSound();
+        SoundEffectsManager.instance.PlayButtonClickSound();
         HomeMenu.SetActive(false);
         LevelsMenu.SetActive(false);
         SettingsMenu.SetActive(false);
@@ -46,7 +56,7 @@ public class HomeMenuController : MonoBehaviour
     }
 
     public void StartGame() {
-        SoundManager.instance.PlayButtonClickSound();
+        SoundEffectsManager.instance.PlayButtonClickSound();
 
         // start from where player left off
         ProgressData progress = ProgressDataManager.LoadProgress();
@@ -61,7 +71,7 @@ public class HomeMenuController : MonoBehaviour
     }
 
     public static void StartLevel (int level) {
-        SoundManager.instance.PlayButtonClickSound();
+        SoundEffectsManager.instance.PlayButtonClickSound();
         GameDataController.setLevel(level);
         SceneManager.LoadScene("Level-" + level);
     }

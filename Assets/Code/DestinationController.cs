@@ -19,7 +19,7 @@ public class DestinationController : MonoBehaviour
         GameDataController.updateCurrentLevelCoins(BowlController.instance.coinCount);
 
         // Play win sound
-        SoundManager.instance.PlayWinSound();
+        SoundEffectsManager.instance.PlayWinSound();
 
         yield return new WaitForSeconds(1f); // Wait for 1 second
 

@@ -27,7 +27,7 @@ public class CoinsPerLevel : MonoBehaviour
         return coins_per_level[level - 1];
     }
 
-    public static void load_star_progress() {
+    public static void load_progress() {
         ProgressData progress = ProgressDataManager.LoadProgress();
         if (progress == null) {
             collected_stars_per_level = new int[GameDataController.getLastLevel()];
@@ -63,7 +63,7 @@ public class CoinsPerLevel : MonoBehaviour
         collected_stars_per_level = new int[GameDataController.getLastLevel()];
         ProgressData progress = new ProgressData(collected_stars_per_level, 1);
         ProgressDataManager.SaveProgress(progress);
-        load_star_progress();
+        load_progress();
 
         // reset UI on level select window after clearing process
         LevelSelect.instance.destroy_all_level_prefabs();
