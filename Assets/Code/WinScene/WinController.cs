@@ -17,6 +17,7 @@ public class WinController : MonoBehaviour
     public float three_star_threshold = 0.9f;
     public float two_star_threshold = 0.6f;
 
+
     private void Awake()
     {
         int currentCoins = GameDataController.getCurrentLevelCoins();
@@ -28,15 +29,15 @@ public class WinController : MonoBehaviour
         }
 
         int awarded_stars = award_stars(currentCoins);
-        CoinsPerLevel.set_collected_stars(GameDataController.getLevel(), awarded_stars);
+        LevelController.set_collected_stars(GameDataController.getLevel(), awarded_stars);
 
         stars_collected_UI.text = "" + awarded_stars;
-        total_stars_collected_UI.text = "" + CoinsPerLevel.get_total_stars();
+        total_stars_collected_UI.text = "" + LevelController.get_total_stars();
 
         // Saving current level + 1 because we want the player to return to the next level
         // when they return not back to the one they just won
         ProgressData progress = new ProgressData(
-                                        CoinsPerLevel.get_all_collected_stars(), 
+                                        LevelController.get_all_collected_stars(), 
                                         GameDataController.getLevel() + 1);
         ProgressDataManager.SaveProgress(progress);                                
     }
@@ -56,7 +57,7 @@ public class WinController : MonoBehaviour
     }
 
     public int award_stars(int coins_collected) {
-        int total_possible_coins = CoinsPerLevel.get_total_coins(GameDataController.getLevel());
+        int total_possible_coins = LevelController.get_total_coins(GameDataController.getLevel());
         if (coins_collected >= total_possible_coins * three_star_threshold) {
             return 3;
         } else if (coins_collected >= total_possible_coins * two_star_threshold) {

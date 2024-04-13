@@ -9,6 +9,7 @@ public class LevelSelect : MonoBehaviour
     public static LevelSelect instance;
     public Transform level_select_field;
     public GameObject level_prefab;
+    public GameObject locked_level_prefab;
 
     public float column_spacing = 1f;
     public float row_spacing = 1f;
@@ -23,18 +24,27 @@ public class LevelSelect : MonoBehaviour
 
     public void setup_level_select_grid () {
         int number_of_rows = (int) Mathf.Round(GameDataController.getLastLevel()/5);
+        
         for (int row=0; row<=number_of_rows; row++) {
             for (int col=1; col<levels_per_row + 1; col++) {
                 int level = row * levels_per_row + col;
                 if (level > GameDataController.getLastLevel()) {
                     break;
                 }
-                GameObject created_prefab = Instantiate(level_prefab, level_select_field);
+                GameObject created_prefab;
+                if (is_locked(level)) {
+                    created_prefab = Instantiate(locked_level_prefab, level_select_field);
+                    created_prefab.transform.position += new Vector3(
+                                                        (col * column_spacing) + horizontal_offset, 
+                                                        (-row * row_spacing) + vertical_offset, 
+                                                        0);
+                    continue;
+                }
+                created_prefab = Instantiate(level_prefab, level_select_field);
                 created_prefab.transform.position += new Vector3(
                                                     (col * column_spacing) + horizontal_offset, 
                                                     (-row * row_spacing) + vertical_offset, 
                                                     0);
-                
                 
                 // update the text on the button to reflect the level number
                 GameObject text_field = created_prefab.transform.Find("Level Number").gameObject;
@@ -42,10 +52,11 @@ public class LevelSelect : MonoBehaviour
                 
                 // set the onclick function of the button with the level number
                 Button b = created_prefab.GetComponent<Button>();
-                b.onClick.AddListener(delegate() { HomeMenuController.StartLevel(level); });
+                b.onClick.RemoveAllListeners();
+                b.onClick.AddListener(() => HomeMenuController.StartLevel(level));
 
                 // disable unearned stars for level
-                int stars_earned = CoinsPerLevel.get_collected_stars(level);
+                int stars_earned = LevelController.get_collected_stars(level);
                 switch (stars_earned) {
                     case 0:
                         created_prefab.transform.Find("Star1").gameObject.SetActive(false);
@@ -65,6 +76,11 @@ public class LevelSelect : MonoBehaviour
                 }
             }
         }
+    }
+
+    bool is_locked(int level) {
+        ProgressData progress = LevelController.load_progress();
+        return (progress == null && level != 1 || progress.get_max_level() < level);
     }
 
     public void destroy_all_level_prefabs() {

@@ -24,7 +24,7 @@ public class ProgressData
         return collected_stars_per_level;
     }
 
-    public int get_current_level() {
+    public int get_max_level() {
         return max_level;
     }
 }

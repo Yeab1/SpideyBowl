@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CoinsPerLevel : MonoBehaviour
+public class LevelController : MonoBehaviour
 {
     // the total number of coins player could have collected in a level
     public static int[] coins_per_level;
     // the number of stars player collected per level
     public static int[] collected_stars_per_level;
+
+    static int max_level;
 
     public static void initialize_coins_per_level () {
         coins_per_level = new int[GameDataController.getLastLevel()];
@@ -27,13 +29,23 @@ public class CoinsPerLevel : MonoBehaviour
         return coins_per_level[level - 1];
     }
 
-    public static void load_progress() {
+    public static int get_max_unlocked_level() {
+        return max_level;
+    }
+    public static void set_max_unlocked_level(int level) {
+        max_level = level;
+    }
+
+    public static ProgressData load_progress() {
         ProgressData progress = ProgressDataManager.LoadProgress();
         if (progress == null) {
             collected_stars_per_level = new int[GameDataController.getLastLevel()];
+            max_level = 1;
         } else {
             collected_stars_per_level = progress.get_collected_stars_per_level();
+            max_level = progress.get_max_level();
         }
+        return progress;
     }
 
     public static void set_collected_stars(int level, int collected_stars) {

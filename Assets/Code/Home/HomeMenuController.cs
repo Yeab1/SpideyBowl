@@ -11,11 +11,12 @@ public class HomeMenuController : MonoBehaviour
     public GameObject HomeMenu;
     public GameObject LevelsMenu;
     public GameObject SettingsMenu;
+    public static ProgressData progress;
     void Awake()
     {
         instance = this;
         // initialize the player's star collection progress
-        CoinsPerLevel.load_progress();
+        progress = LevelController.load_progress();
 
         // initialize settings
         AudioSettingsData audio_settings = ProgressDataManager.LoadAudioSettings();
@@ -57,20 +58,23 @@ public class HomeMenuController : MonoBehaviour
 
     public void StartGame() {
         SoundEffectsManager.instance.PlayButtonClickSound();
-
-        // start from where player left off
-        ProgressData progress = ProgressDataManager.LoadProgress();
         if (progress == null) {
             // if there is no progress, start from level 1
             GameDataController.setLevel(1);
         } else {
-            GameDataController.setLevel(progress.get_current_level());
+            GameDataController.setLevel(progress.get_max_level());
         }
 
         SceneManager.LoadScene("Level-" + GameDataController.getLevel());
     }
 
     public static void StartLevel (int level) {
+        // Debug.Log("test: " + (progress == null && level != 1));
+        // Debug.Log("test2: " + (progress.get_max_level() < level));
+        if (progress == null && level != 1 || progress.get_max_level() < level) {
+            Debug.Log("Locked");
+            return;
+        }
         SoundEffectsManager.instance.PlayButtonClickSound();
         GameDataController.setLevel(level);
         SceneManager.LoadScene("Level-" + level);
@@ -80,6 +84,6 @@ public class HomeMenuController : MonoBehaviour
     // for debugging purposes only. Don't forget to remove 
     // the clear progress button in settings
     public void clearAllProgress() {
-        CoinsPerLevel.clear_all_progress();
+        LevelController.clear_all_progress();
     }
 }
