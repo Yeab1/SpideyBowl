@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class BowlController : MonoBehaviour
 {
+    public static bool is_debug_mode = false;
     public static BowlController instance;
 
     public Camera mainCamera;

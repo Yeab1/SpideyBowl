@@ -23,6 +23,7 @@ public class LevelController : MonoBehaviour
         coins_per_level[7] = 17;
         coins_per_level[8] = 18;
         coins_per_level[9] = 17;
+        coins_per_level[10] = 17;
     }
 
     public static int get_total_coins(int level) {
@@ -42,7 +43,20 @@ public class LevelController : MonoBehaviour
             collected_stars_per_level = new int[GameDataController.getLastLevel()];
             max_level = 1;
         } else {
-            collected_stars_per_level = progress.get_collected_stars_per_level();
+            // copy the data from file over to the new array because in case of 
+            // new level creations, the array on file is smaller than the new one
+            // which creates an index out of bounds exception
+            // TODO: Release: No need to copy data over for release.
+            // Just uncomment this line:
+            // collected_stars_per_level = progress.get_collected_stars_per_level();
+            // remove this start:
+            int[] saved_collected_stars_per_level;
+            saved_collected_stars_per_level = progress.get_collected_stars_per_level();
+            collected_stars_per_level = new int[GameDataController.getLastLevel()];
+            for (int i = 0; i < saved_collected_stars_per_level.Length; i++) {
+                collected_stars_per_level[i] = saved_collected_stars_per_level[i];
+            }
+            // remove this end:
             max_level = progress.get_max_level();
         }
         return progress;

@@ -34,11 +34,18 @@ public class WinController : MonoBehaviour
         stars_collected_UI.text = "" + awarded_stars;
         total_stars_collected_UI.text = "" + LevelController.get_total_stars();
 
-        // Saving current level + 1 because we want the player to return to the next level
-        // when they return not back to the one they just won
-        ProgressData progress = new ProgressData(
-                                        LevelController.get_all_collected_stars(), 
-                                        GameDataController.getLevel() + 1);
+        int current_level = GameDataController.getLevel();
+        int max_unlocked_level = LevelController.get_max_unlocked_level();
+
+        // max unlocked level should only be updated when player unlocks a new level
+        ProgressData progress = new ProgressData();
+        progress.set_collected_stars_per_level(LevelController.get_all_collected_stars());
+        if (current_level == max_unlocked_level) {
+            progress.set_max_unlocked_level(max_unlocked_level + 1);
+        } else {
+            progress.set_max_unlocked_level(max_unlocked_level);
+        }
+        
         ProgressDataManager.SaveProgress(progress);                                
     }
     public void restartLevel()

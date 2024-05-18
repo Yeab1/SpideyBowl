@@ -69,12 +69,13 @@ public class HomeMenuController : MonoBehaviour
     }
 
     public static void StartLevel (int level) {
-        // Debug.Log("test: " + (progress == null && level != 1));
-        // Debug.Log("test2: " + (progress.get_max_level() < level));
-        if (progress == null && level != 1 || progress.get_max_level() < level) {
-            Debug.Log("Locked");
-            return;
+        if (!BowlController.is_debug_mode) {
+            if (progress == null && level != 1 || progress.get_max_level() < level) {
+                Debug.Log("Locked");
+                return;
+            }
         }
+    
         SoundEffectsManager.instance.PlayButtonClickSound();
         GameDataController.setLevel(level);
         SceneManager.LoadScene("Level-" + level);

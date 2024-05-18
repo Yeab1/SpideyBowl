@@ -20,6 +20,14 @@ public class ProgressData
         this.max_level = 1;
     }
 
+    public void set_collected_stars_per_level(int[] collected_stars_per_level) {
+        this.collected_stars_per_level = collected_stars_per_level;
+    }
+
+    public void set_max_unlocked_level(int max_unlocked_level) {
+        this.max_level = max_unlocked_level;
+    }
+
     public int[] get_collected_stars_per_level() {
         return collected_stars_per_level;
     }
