@@ -129,6 +129,7 @@ public class BowlController : MonoBehaviour
             MenuController.instance.show();
         }
     }
+    // TODO: this function and canPlayerDash() are not being used.
     public void dashIfPossible() {
         if (canPlayerDash())
         {
@@ -256,7 +257,7 @@ public class BowlController : MonoBehaviour
         _rb.velocity = new Vector2(_rb.velocity.x, force);
     }
 
-    void dash()
+    public void dash()
     {
         // apply a force to the right
         _rb.velocity = new Vector2(1 * dashForce, _rb.velocity.y);

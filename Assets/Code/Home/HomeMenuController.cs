@@ -77,7 +77,6 @@ public class HomeMenuController : MonoBehaviour
     
         SoundEffectsManager.instance.PlayButtonClickSound();
         GameDataController.setLevel(level);
-        Debug.Log("Loading: " + level);
         SceneManager.LoadScene(LevelsList.get_level_name_from_index(level));
     }
 

@@ -6,13 +6,14 @@ using TMPro;
 
 public class GameControlls : MonoBehaviour
 {
-    public static MenuController instance;
+    public static GameControlls instance;
 
     // Outlets
-    public void jumpIfPossible() {
+    public static void jumpIfPossible() {
         BowlController.instance.jumpIfPossible();
     }
-    public void dashIfPossible() {
+    // TODO: are these trash? can't we just use the ones in BowlContoller?
+    public static void dashIfPossible() {
         BowlController.instance.dashIfPossible();
     }
 }
