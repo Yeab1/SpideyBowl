@@ -79,6 +79,7 @@ public class LevelSelect : MonoBehaviour
     }
 
     bool is_locked(int level) {
+        // TODO: why is progress loaded for every level?
         ProgressData progress = LevelController.load_progress();
         // TODO: Debug: revert this change
         if (!BowlController.is_debug_mode) {

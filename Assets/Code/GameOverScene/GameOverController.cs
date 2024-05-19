@@ -13,7 +13,7 @@ public class GameOverController : MonoBehaviour
     }
     public void restartLevel()
     {
-        SceneManager.LoadScene("level-" + GameDataController.getLevel());
+        SceneManager.LoadScene(LevelsList.get_level_name_from_index(GameDataController.getLevel()));
     }
 
     public void returnHome() {

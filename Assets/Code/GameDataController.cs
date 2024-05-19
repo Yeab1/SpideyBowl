@@ -5,8 +5,8 @@ using UnityEngine;
 public class GameDataController : MonoBehaviour
 {
     public static GameDataController instance;
-    static int currentLevel = 1;
-    static int lastLevel = 12;
+    static int currentLevel = 0;
+    static int lastLevel = LevelsList.get_number_of_levels();
     static int current_level_coins = 0;
 
     public static void setLevel(int level) {

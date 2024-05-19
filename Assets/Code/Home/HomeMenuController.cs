@@ -64,8 +64,7 @@ public class HomeMenuController : MonoBehaviour
         } else {
             GameDataController.setLevel(progress.get_max_level());
         }
-
-        SceneManager.LoadScene("Level-" + GameDataController.getLevel());
+        SceneManager.LoadScene(LevelsList.get_level_name_from_index(GameDataController.getLevel()));
     }
 
     public static void StartLevel (int level) {
@@ -78,7 +77,8 @@ public class HomeMenuController : MonoBehaviour
     
         SoundEffectsManager.instance.PlayButtonClickSound();
         GameDataController.setLevel(level);
-        SceneManager.LoadScene("Level-" + level);
+        Debug.Log("Loading: " + level);
+        SceneManager.LoadScene(LevelsList.get_level_name_from_index(level));
     }
 
     // TODO: Delete for release
