@@ -96,7 +96,7 @@ public class BowlController : MonoBehaviour
             // 0.1f,
             // LayerMask.GetMask("UI"));
             
-            float grappleTheshold = Screen.width * 1/4;
+            float grappleTheshold = Screen.width * 1/3;
             // If the raycast didn't hit any UI elements, process gameplay input
             if (touch.position.x > grappleTheshold)
             {
@@ -106,6 +106,8 @@ public class BowlController : MonoBehaviour
                 else if (touch.phase == TouchPhase.Ended) {
                     cutNoodle();
                 }
+            } else {
+                jumpIfPossible();
             }
         }
 
