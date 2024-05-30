@@ -23,7 +23,6 @@ public class DestinationController : MonoBehaviour
 
         yield return new WaitForSeconds(1f); // Wait for 1 second
 
-        // Change scene
         SceneManager.LoadScene("win");
     }
 }

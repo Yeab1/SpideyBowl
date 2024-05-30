@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class BowlController : MonoBehaviour
 {
-    public static bool is_debug_mode = false;
+    public static bool is_debug_mode = true;
     public static BowlController instance;
 
     public Camera mainCamera;
@@ -37,6 +37,10 @@ public class BowlController : MonoBehaviour
     public static bool isInDangerZone = false;
     public bool canDash = false;
     public bool isPaused = false;
+
+    // Tutorial state tracking
+    public int tutorial_state = 0;
+
     private void Awake()
     {
         instance = this;

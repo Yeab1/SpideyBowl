@@ -8,6 +8,7 @@ public class GameDataController : MonoBehaviour
     static int currentLevel = 0;
     static int lastLevel = LevelsList.get_number_of_levels();
     static int current_level_coins = 0;
+    public static bool is_tutorial = false;
 
     public static void setLevel(int level) {
         currentLevel = level;

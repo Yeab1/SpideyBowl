@@ -13,21 +13,23 @@ public class LevelController : MonoBehaviour
 
     public static void initialize_coins_per_level () {
         coins_per_level = new int[GameDataController.getLastLevel()];
-        coins_per_level[0] = 8;
-        coins_per_level[1] = 13;
-        coins_per_level[2] = 8;
-        coins_per_level[3] = 10;
-        coins_per_level[4] = 26;
-        coins_per_level[5] = 8;
-        coins_per_level[6] = 15;
-        coins_per_level[7] = 17;
-        coins_per_level[8] = 18;
-        coins_per_level[9] = 17;
-        coins_per_level[10] = 17;
+        coins_per_level[0] = 0;
+        coins_per_level[1] = 8;
+        coins_per_level[2] = 13; 
+        coins_per_level[3] = 8;
+        coins_per_level[4] = 10; 
+        coins_per_level[5] = 26; 
+        coins_per_level[6] = 8;
+        coins_per_level[7] = 15;
+        coins_per_level[8] = 17; 
+        coins_per_level[9] = 18; 
+        coins_per_level[10] = 15; 
+        coins_per_level[11] = 17;
+        coins_per_level[12] = 17;
     }
 
     public static int get_total_coins(int level) {
-        return coins_per_level[level - 1];
+        return coins_per_level[level];
     }
 
     public static int get_max_unlocked_level() {
@@ -41,7 +43,7 @@ public class LevelController : MonoBehaviour
         ProgressData progress = ProgressDataManager.LoadProgress();
         if (progress == null) {
             collected_stars_per_level = new int[GameDataController.getLastLevel()];
-            max_level = 1;
+            max_level = 0;
         } else {
             // copy the data from file over to the new array because in case of 
             // new level creations, the array on file is smaller than the new one
@@ -87,7 +89,7 @@ public class LevelController : MonoBehaviour
 
     public static void clear_all_progress() {
         collected_stars_per_level = new int[GameDataController.getLastLevel()];
-        ProgressData progress = new ProgressData(collected_stars_per_level, 1);
+        ProgressData progress = new ProgressData(collected_stars_per_level, 0);
         ProgressDataManager.SaveProgress(progress);
         load_progress();
 

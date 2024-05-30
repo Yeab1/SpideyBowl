@@ -17,7 +17,7 @@ public class ProgressData
 
     public ProgressData() {
         this.collected_stars_per_level = new int[GameDataController.getLastLevel()];
-        this.max_level = 1;
+        this.max_level = 0;
     }
 
     public void set_collected_stars_per_level(int[] collected_stars_per_level) {
