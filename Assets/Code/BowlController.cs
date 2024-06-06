@@ -62,7 +62,7 @@ public class BowlController : MonoBehaviour
         levelDisplay.text = "Level " + GameDataController.getLevel();
 
         // initialize the total coins for each level
-        LevelController.initialize_coins_per_level();
+        // LevelController.initialize_coins_per_level();
     }
 
     // Update is called once per frame

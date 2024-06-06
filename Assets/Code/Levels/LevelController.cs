@@ -5,29 +5,25 @@ using UnityEngine;
 public class LevelController : MonoBehaviour
 {
     // the total number of coins player could have collected in a level
-    public static int[] coins_per_level;
+    public static int[] coins_per_level = {
+        0, // there is no level 0
+        8,
+        13,
+        8,
+        10,
+        37,
+        8,
+        15,
+        17,
+        36,
+        15, // level 10
+        17,
+        17,
+    };
     // the number of stars player collected per level
     public static int[] collected_stars_per_level;
 
     static int max_level;
-
-    public static void initialize_coins_per_level () {
-        coins_per_level = new int[GameDataController.getLastLevel()];
-        // level 0 does not exist. Leaving the 0th element free 
-        // to make code intuitive
-        coins_per_level[1] = 8;
-        coins_per_level[2] = 13; 
-        coins_per_level[3] = 8;
-        coins_per_level[4] = 10; 
-        coins_per_level[5] = 37; 
-        coins_per_level[6] = 8;
-        coins_per_level[7] = 15;
-        coins_per_level[8] = 17; 
-        coins_per_level[9] = 36; 
-        coins_per_level[10] = 15; 
-        coins_per_level[11] = 17;
-        coins_per_level[12] = 17;
-    }
 
     public static int get_total_coins(int level) {
         return coins_per_level[level];
