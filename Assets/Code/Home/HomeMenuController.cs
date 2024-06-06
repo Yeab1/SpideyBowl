@@ -59,22 +59,17 @@ public class HomeMenuController : MonoBehaviour
     public void StartGame() {
         SoundEffectsManager.instance.PlayButtonClickSound();
         if (progress == null || progress.get_max_level() == 0) {
-            // if there is no progress, play the tutorial
-            GameDataController.is_tutorial = true;
-            GameDataController.setLevel(0);
+            // if there is no progress, start from level 1
+            GameDataController.setLevel(1);
         } else {
             GameDataController.setLevel(progress.get_max_level());
         }
-        SceneManager.LoadScene(LevelsList.get_level_name_from_index(GameDataController.getLevel()));
+        StartLevel(GameDataController.getLevel());
     }
 
     public static void StartLevel (int level) {
-        if (level == 0) {
-            GameDataController.is_tutorial = true;
-        }
-
         if (!BowlController.is_debug_mode) {
-            if (progress == null && level != 0 || progress.get_max_level() < level) {
+            if (progress == null && level != 1 || progress.get_max_level() < level) {
                 Debug.Log("Locked");
                 return;
             }

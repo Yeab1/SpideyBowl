@@ -83,7 +83,7 @@ public class LevelSelect : MonoBehaviour
         ProgressData progress = LevelController.load_progress();
         // TODO: Debug: revert this change
         if (!BowlController.is_debug_mode) {
-            return (progress == null && level != 0 || progress.get_max_level() < level);
+            return (progress == null && level != 1 || progress.get_max_level() < level);
         }
         return false;
     }

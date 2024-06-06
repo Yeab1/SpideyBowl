@@ -13,7 +13,8 @@ public class LevelController : MonoBehaviour
 
     public static void initialize_coins_per_level () {
         coins_per_level = new int[GameDataController.getLastLevel()];
-        coins_per_level[0] = 0;
+        // level 0 does not exist. Leaving the 0th element free 
+        // to make code intuitive
         coins_per_level[1] = 8;
         coins_per_level[2] = 13; 
         coins_per_level[3] = 8;
@@ -43,7 +44,7 @@ public class LevelController : MonoBehaviour
         ProgressData progress = ProgressDataManager.LoadProgress();
         if (progress == null) {
             collected_stars_per_level = new int[GameDataController.getLastLevel()];
-            max_level = 0;
+            max_level = 1;
         } else {
             // copy the data from file over to the new array because in case of 
             // new level creations, the array on file is smaller than the new one
@@ -89,7 +90,7 @@ public class LevelController : MonoBehaviour
 
     public static void clear_all_progress() {
         collected_stars_per_level = new int[GameDataController.getLastLevel()];
-        ProgressData progress = new ProgressData(collected_stars_per_level, 0);
+        ProgressData progress = new ProgressData(collected_stars_per_level, 1);
         ProgressDataManager.SaveProgress(progress);
         load_progress();
 
