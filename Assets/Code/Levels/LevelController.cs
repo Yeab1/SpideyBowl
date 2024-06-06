@@ -19,11 +19,11 @@ public class LevelController : MonoBehaviour
         coins_per_level[2] = 13; 
         coins_per_level[3] = 8;
         coins_per_level[4] = 10; 
-        coins_per_level[5] = 26; 
+        coins_per_level[5] = 37; 
         coins_per_level[6] = 8;
         coins_per_level[7] = 15;
         coins_per_level[8] = 17; 
-        coins_per_level[9] = 18; 
+        coins_per_level[9] = 36; 
         coins_per_level[10] = 15; 
         coins_per_level[11] = 17;
         coins_per_level[12] = 17;
