@@ -8,8 +8,8 @@ using UnityEngine;
 public class LevelsList : MonoBehaviour
 {
     public static string[] Level_string_list = {
-        "Level-0-0",
         "Level-1-0",
+        "Level-1-1",
         "Level-2-0",
         "Level-3-0",
         "Level-4-0",
@@ -24,10 +24,10 @@ public class LevelsList : MonoBehaviour
     };
 
     public static int get_number_of_levels() {
-        return Level_string_list.Length;
+        return Level_string_list.Length; // to avoid the level 0 padding
     }
 
     public static string get_level_name_from_index(int index) {
-        return Level_string_list[index];
+        return Level_string_list[index - 1];
     }
 }

@@ -6,7 +6,7 @@ public class LevelController : MonoBehaviour
 {
     // the total number of coins player could have collected in a level
     public static int[] coins_per_level = {
-        0, // there is no level 0
+        4, // level 1 (Level-1-0)
         8,
         13,
         8,
