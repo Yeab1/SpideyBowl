@@ -30,4 +30,14 @@ public class LevelsList : MonoBehaviour
     public static string get_level_name_from_index(int index) {
         return Level_string_list[index - 1];
     }
+
+    public static int get_index_from_level_name(string level) {
+        for (int i = 0; i < Level_string_list.Length; i++) {
+            if (Level_string_list[i] == level) {
+                return i;
+            }
+        }
+        Debug.Log("Could not find "+ level + " in Level_string_list");
+        return -1;
+    }
 }

@@ -53,13 +53,27 @@ public class WinController : MonoBehaviour
     }
     public void restartLevel()
     {
-        SceneManager.LoadScene(LevelsList.get_level_name_from_index(GameDataController.getLevel()));
+        if (!TutorialUtils.level_needs_tutorial(
+            LevelsList.get_level_name_from_index(
+                GameDataController.getLevel()))) {
+                    SceneManager.LoadScene(LevelsList.get_level_name_from_index(GameDataController.getLevel()));
+                }
+        else {
+            SceneManager.LoadScene("Tutorial");
+        } 
     }
 
     public void nextLevel() 
     {
         GameDataController.incrementLevel();
-        SceneManager.LoadScene(LevelsList.get_level_name_from_index(GameDataController.getLevel()));
+        if (!TutorialUtils.level_needs_tutorial(
+            LevelsList.get_level_name_from_index(
+                GameDataController.getLevel()))) {
+                    SceneManager.LoadScene(LevelsList.get_level_name_from_index(GameDataController.getLevel()));
+                }
+        else {
+            SceneManager.LoadScene("Tutorial");
+        } 
     }
 
     public void returnHome() {

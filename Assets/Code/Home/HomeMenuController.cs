@@ -77,7 +77,14 @@ public class HomeMenuController : MonoBehaviour
     
         SoundEffectsManager.instance.PlayButtonClickSound();
         GameDataController.setLevel(level);
-        SceneManager.LoadScene(LevelsList.get_level_name_from_index(level));
+        if (!TutorialUtils.level_needs_tutorial(
+            LevelsList.get_level_name_from_index(
+                GameDataController.getLevel()))) {
+                    SceneManager.LoadScene(LevelsList.get_level_name_from_index(level));
+                }
+        else {
+            SceneManager.LoadScene("Tutorial");
+        } 
     }
 
     // TODO: Delete for release
