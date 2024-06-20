@@ -10,7 +10,12 @@ public class LevelsList : MonoBehaviour
     public static string[] Level_string_list = {
         "Level-1-0",
         "Level-1-1",
+        "Level-1-2",
+        "Level-1-3",
+        "Level-1-4",
         "Level-2-0",
+        "Level-2-1",
+        "Level-2-2",
         "Level-3-0",
         "Level-4-0",
         "Level-5-0",

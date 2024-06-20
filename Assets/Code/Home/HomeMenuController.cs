@@ -77,6 +77,7 @@ public class HomeMenuController : MonoBehaviour
     
         SoundEffectsManager.instance.PlayButtonClickSound();
         GameDataController.setLevel(level);
+
         if (!TutorialUtils.level_needs_tutorial(
             LevelsList.get_level_name_from_index(
                 GameDataController.getLevel()))) {

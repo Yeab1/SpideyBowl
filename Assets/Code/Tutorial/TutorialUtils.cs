@@ -8,6 +8,7 @@ public class TutorialUtils : MonoBehaviour
     public static HashSet<string> levels_with_tutorial = new HashSet<string>(new string[] {
         "Level-1-0",
         "Level-1-1",
+        "Level-1-3",
         "Level-3-0",
         "Level-5-0",
     });
@@ -23,26 +24,32 @@ public class TutorialUtils : MonoBehaviour
     public static Dictionary<string, Dictionary<string, string>> tutorial_details = new Dictionary<string, Dictionary<string, string>> {
         { 
             "Level-1-0", new Dictionary<string, string> {
-                {"tutorial_title", "title 1 test"},
-                {"tutorial_body", "body 1 test"},
+                {"tutorial_title", "level-1-0 title"},
+                {"tutorial_body", "level-1-0 body"},
             }
         },
         { 
             "Level-1-1", new Dictionary<string, string> {
-                {"tutorial_title", "title 2 test"},
-                {"tutorial_body", "body 2 test"},
+                {"tutorial_title", "level-1-1 title"},
+                {"tutorial_body", "level-1-1 body"},
+            }
+        },
+        { 
+            "Level-1-3", new Dictionary<string, string> {
+                {"tutorial_title", "level-1-3 title"},
+                {"tutorial_body", "level-1-3 body"},
             }
         },
         { 
             "Level-3-0", new Dictionary<string, string> {
-                {"tutorial_title", "title 3 test"},
-                {"tutorial_body", "body 3 test"},
+                {"tutorial_title", "level-3-0 title"},
+                {"tutorial_body", "level-3-0 body"},
             }
         },
         { 
             "Level-5-0", new Dictionary<string, string> {
-                {"tutorial_title", "title 4 test"},
-                {"tutorial_body", "body 4 test"},
+                {"tutorial_title", "level-5-0 title"},
+                {"tutorial_body", "level-5-0 body"},
             }
         }
     };

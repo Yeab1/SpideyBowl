@@ -6,19 +6,24 @@ public class LevelController : MonoBehaviour
 {
     // the total number of coins player could have collected in a level
     public static int[] coins_per_level = {
-        4, // level 1 (Level-1-0)
-        8,
-        13,
-        8,
-        10,
-        37,
-        8,
-        15,
-        17,
-        36,
-        15, // level 10
-        17,
-        17,
+        4,  // level 1-0
+        8,  // level 1-1
+        14, // level 1-2
+        11, // level 1-3
+        11, // level 1-4
+        10, // level 2-0
+        13, // level 2-1
+        10, // level 2-2
+        8,  // level 3-0
+        10, // level 4-0
+        37, // level 5-0
+        8,  // level 6-0
+        15, // level 7-0
+        17, // level 8-0
+        36, // level 8-1
+        15, // level 8-2
+        17, // level 9-0 
+        17, // level 9-1
     };
     // the number of stars player collected per level
     public static int[] collected_stars_per_level;
