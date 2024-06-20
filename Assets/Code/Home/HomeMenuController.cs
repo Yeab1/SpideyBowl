@@ -88,6 +88,20 @@ public class HomeMenuController : MonoBehaviour
         } 
     }
 
+    public void next_section() {
+        if (LevelSelect.instance.current_section >= Mathf.Floor(GameDataController.getLastLevel() / 15)) return;
+        LevelSelect.instance.destroy_all_level_prefabs();
+        LevelSelect.instance.current_section += 1;
+        LevelSelect.instance.setup_level_select_grid();
+    }
+
+    public void previous_section() {
+        if (LevelSelect.instance.current_section <= 0) return;
+        LevelSelect.instance.destroy_all_level_prefabs();
+        LevelSelect.instance.current_section -= 1;
+        LevelSelect.instance.setup_level_select_grid();
+    }
+
     // TODO: Delete for release
     // for debugging purposes only. Don't forget to remove 
     // the clear progress button in settings

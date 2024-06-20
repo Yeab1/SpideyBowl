@@ -16,18 +16,31 @@ public class LevelSelect : MonoBehaviour
     public float vertical_offset = 1f;
     public float horizontal_offset = 1f;
     int levels_per_row = 5;
+    int levels_per_section = 15;
+    public int current_section = 0; // breakup levels list into sections
+    public GameObject next_section_btn;
+    public GameObject previous_section_btn;
 
     void Start () {
         instance = this;
+        current_section = (int) Mathf.Floor((GameDataController.getLevel() - 1) / levels_per_section);
         setup_level_select_grid();
     }
 
     public void setup_level_select_grid () {
-        int number_of_rows = (int) Mathf.Round(GameDataController.getLastLevel()/5);
+        // hide the next and previous section buttons if buttons cannot be used
+        // i.e if they would lead to going out of bounds.
+        if (current_section >= Mathf.Floor(GameDataController.getLastLevel() / levels_per_section)) 
+            next_section_btn.SetActive(false);
+        else next_section_btn.SetActive(true);
         
-        for (int row=0; row<=number_of_rows; row++) {
-            for (int col=1; col<levels_per_row + 1; col++) {
-                int level = row * levels_per_row + col;
+        if (current_section <= 0) 
+            previous_section_btn.SetActive(false);
+        else previous_section_btn.SetActive(true);
+
+        for (int row=0; row<=2; row++) {
+            for (int col=1; col < levels_per_row + 1; col++) {
+                int level = (current_section * levels_per_section) + (row * levels_per_row + col);
                 if (level > GameDataController.getLastLevel()) {
                     break;
                 }
@@ -93,6 +106,5 @@ public class LevelSelect : MonoBehaviour
         {
             Destroy(level_select_field.GetChild(i).gameObject);
         }
-        Debug.Log("Cleared all data");
     }
 }
