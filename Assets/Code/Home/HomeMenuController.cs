@@ -17,6 +17,12 @@ public class HomeMenuController : MonoBehaviour
         instance = this;
         // initialize the player's star collection progress
         progress = LevelController.load_progress();
+        if (progress == null || progress.get_max_level() == 0) {
+            // if there is no progress, start from level 1
+            GameDataController.setLevel(1);
+        } else {
+            GameDataController.setLevel(progress.get_max_level());
+        }
 
         // initialize settings
         AudioSettingsData audio_settings = ProgressDataManager.LoadAudioSettings();
@@ -58,12 +64,7 @@ public class HomeMenuController : MonoBehaviour
 
     public void StartGame() {
         SoundEffectsManager.instance.PlayButtonClickSound();
-        if (progress == null || progress.get_max_level() == 0) {
-            // if there is no progress, start from level 1
-            GameDataController.setLevel(1);
-        } else {
-            GameDataController.setLevel(progress.get_max_level());
-        }
+        
         StartLevel(GameDataController.getLevel());
     }
 
