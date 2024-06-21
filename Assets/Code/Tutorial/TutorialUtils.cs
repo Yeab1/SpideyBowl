@@ -10,6 +10,7 @@ public class TutorialUtils : MonoBehaviour
         "Level-1-1",
         "Level-1-3",
         "Level-3-0",
+        "Level-4-0",
         "Level-5-0",
     });
     /*
@@ -44,6 +45,12 @@ public class TutorialUtils : MonoBehaviour
             "Level-3-0", new Dictionary<string, string> {
                 {"tutorial_title", "level-3-0 title"},
                 {"tutorial_body", "level-3-0 body"},
+            }
+        },
+        { 
+            "Level-4-0", new Dictionary<string, string> {
+                {"tutorial_title", "level-4-0 title"},
+                {"tutorial_body", "level-4-0 body"},
             }
         },
         { 
