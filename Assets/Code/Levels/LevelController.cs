@@ -21,7 +21,12 @@ public class LevelController : MonoBehaviour
         7,  // level 3-3
         6,  // level 4-0
         10, // level 4-1
-        37, // level 5-0
+        10, // level 4-2
+        10, // level 4-3
+        0, // level 5-0
+        0, // level 5-1
+        0, // level 5-2
+        0, // level 5-3
         8,  // level 6-0
         15, // level 7-0
         17, // level 8-0
