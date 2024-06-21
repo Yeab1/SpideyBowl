@@ -67,6 +67,9 @@ public class MenuController : MonoBehaviour
     }
 
     public void returnHome() {
+        // time needs to resume so that coroutines following the home
+        // scene can have proper timing. Ex: TutorialController button.
+        Time.timeScale = 1.0f;
         SoundEffectsManager.instance.PlayButtonClickSound();
         SceneManager.LoadScene("Home");
     }
