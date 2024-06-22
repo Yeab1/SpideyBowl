@@ -30,6 +30,7 @@ public class LevelsList : MonoBehaviour
         "Level-5-2",
         "Level-5-3",
         "Level-6-0",
+        "Level-6-1",
         "Level-7-0",
         "Level-8-0",
         "Level-8-1",
