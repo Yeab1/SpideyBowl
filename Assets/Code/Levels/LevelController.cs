@@ -20,7 +20,7 @@ public class LevelController : MonoBehaviour
         7,  // level 3-2
         7,  // level 3-3
         6,  // level 4-0
-        10, // level 4-1
+        8, // level 4-1
         10, // level 4-2
         10, // level 4-3
         20, // level 5-0
@@ -32,9 +32,9 @@ public class LevelController : MonoBehaviour
         15, // level 7-0
         17, // level 8-0
         36, // level 8-1
-        15, // level 8-2
-        17, // level 9-0 
-        17, // level 9-1
+        28, // level 8-2
+        26, // level 9-0 
+        28, // level 9-1
     };
     // the number of stars player collected per level
     public static int[] collected_stars_per_level;

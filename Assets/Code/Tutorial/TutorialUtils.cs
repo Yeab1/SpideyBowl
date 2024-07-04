@@ -11,7 +11,7 @@ public class TutorialUtils : MonoBehaviour
         "Level-1-3",
         "Level-3-0",
         "Level-4-0",
-        // "Level-5-0",
+        "Level-5-0",
     });
     /*
         structure of the dictionary below:
@@ -25,38 +25,38 @@ public class TutorialUtils : MonoBehaviour
     public static Dictionary<string, Dictionary<string, string>> tutorial_details = new Dictionary<string, Dictionary<string, string>> {
         { 
             "Level-1-0", new Dictionary<string, string> {
-                {"tutorial_title", "level-1-0 title"},
-                {"tutorial_body", "level-1-0 body"},
+                {"tutorial_title", "Jump"},
+                {"tutorial_body", "Tap the left side of your screen to jump."},
             }
         },
         { 
             "Level-1-1", new Dictionary<string, string> {
-                {"tutorial_title", "level-1-1 title"},
-                {"tutorial_body", "level-1-1 body"},
+                {"tutorial_title", "Swing"},
+                {"tutorial_body", "While in the air, tap and hold the right side of your screen to tap to the nearest light fixture."},
             }
         },
         { 
             "Level-1-3", new Dictionary<string, string> {
-                {"tutorial_title", "level-1-3 title"},
-                {"tutorial_body", "level-1-3 body"},
+                {"tutorial_title", "Slippery tables"},
+                {"tutorial_body", "Oily tables can give you a bit more speed."},
             }
         },
         { 
             "Level-3-0", new Dictionary<string, string> {
-                {"tutorial_title", "level-3-0 title"},
-                {"tutorial_body", "level-3-0 body"},
+                {"tutorial_title", "Double Jump"},
+                {"tutorial_body", "Collect double jump tokens to jump again while in the air."},
             }
         },
         { 
             "Level-4-0", new Dictionary<string, string> {
-                {"tutorial_title", "level-4-0 title"},
-                {"tutorial_body", "level-4-0 body"},
+                {"tutorial_title", "Obstacles"},
+                {"tutorial_body", "Avoid colliding with obstacles."},
             }
         },
         { 
             "Level-5-0", new Dictionary<string, string> {
-                {"tutorial_title", "level-5-0 title"},
-                {"tutorial_body", "level-5-0 body"},
+                {"tutorial_title", "Spices"},
+                {"tutorial_body", "Collecting spices will give you an instant boost in speed for a short period of time."},
             }
         }
     };
