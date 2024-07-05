@@ -15,7 +15,8 @@ public class BowlController : MonoBehaviour
     public TMP_Text coinsUI;
     public TMP_Text countDownUI;
     public TMP_Text levelDisplay;
-    // public GameObject rope;
+    public GameObject rope;
+    public Transform rope_hook;
 
     public float InitialSpeed = 10f;
     public float jumpForce = 5f;
@@ -47,7 +48,9 @@ public class BowlController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // rope.SetActive(false);
+        rope.SetActive(false);
+        Rope.instance.is_rope_in_use = false;
+        Rope.instance.should_generate_rope = false;
         _distanceJoint.enabled = false;
         _rb = GetComponent<Rigidbody2D>();
         _rb.velocity = Vector2.right * InitialSpeed;
@@ -76,6 +79,10 @@ public class BowlController : MonoBehaviour
         // update groundedness state
         updateGrounded();
         updateIsMoving();
+
+        if (!_lineRenderer.enabled) {
+            rope_hook.position = transform.position;
+        }
 
         coinsUI.text = coinCount.ToString();
         if (Input.touchCount > 0)
@@ -244,7 +251,7 @@ public class BowlController : MonoBehaviour
             // Check if there is a hit and grapple on the object
             if (closestAttachableObject != null)
             {
-                Vector2 anchorPoint = new Vector2(closestAttachableObject.transform.position.x, closestAttachableObject.transform.position.y - 2f);
+                Vector2 anchorPoint = new Vector2(closestAttachableObject.transform.position.x, closestAttachableObject.transform.position.y);
                 _lineRenderer.SetPosition(
                     0, anchorPoint);
                 _lineRenderer.SetPosition(
@@ -253,11 +260,11 @@ public class BowlController : MonoBehaviour
                 _distanceJoint.enabled = true;
                 _lineRenderer.enabled = true;
 
-
-                // Rope.instance.is_rope_in_use = true;
-                // Rope.instance.numLinks = 10;
-                // Rope.instance.hook = closestAttachableObject;
-                // rope.SetActive(true);
+                Rope.instance.numLinks = getNoodleSegmentCount(anchorPoint);
+                rope_hook.position = anchorPoint;
+                Rope.instance.is_rope_in_use = true;
+                Rope.instance.should_generate_rope = true;
+                rope.SetActive(true);
             }
         }
     }
@@ -337,6 +344,9 @@ public class BowlController : MonoBehaviour
     void cutNoodle() {
         _distanceJoint.enabled = false;
         _lineRenderer.enabled = false;
+        Rope.instance.is_rope_in_use = false;
+        Rope.instance.should_generate_rope = false;
+        rope.SetActive(false);
     }
 
     public void stopBowl() {
@@ -367,5 +377,17 @@ public class BowlController : MonoBehaviour
         SoundEffectsManager.instance.PlayLossSound();
         // Update the global total coin count to show on the game over screen
         SceneManager.LoadScene("GameOver");
+    }
+
+    public float getDistance(Vector2 point1, Vector2 point2) {
+        return (point1 - point2).magnitude;
+    }
+
+    // returns the number of segments needed to connect the bowl and a fixture
+    public int getNoodleSegmentCount(Vector2 anchor_point) {
+        Vector2 bowl_center = new Vector2(this.transform.position.x, this.transform.position.y);
+        float distance = getDistance(bowl_center, anchor_point);
+        Debug.Log(distance);
+        return (int) (distance / 0.75f);
     }
 }

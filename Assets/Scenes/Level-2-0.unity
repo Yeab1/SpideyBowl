@@ -177,7 +177,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7704380716202462967, guid: 9737458ddfd8245ec98706a4095d1727, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.57
+      value: 1.19
+      objectReference: {fileID: 0}
+    - target: {fileID: 7704380716202462967, guid: 9737458ddfd8245ec98706a4095d1727, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.47
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -527,7 +531,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7704380716202462967, guid: 9737458ddfd8245ec98706a4095d1727, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 26.59
+      value: 27.119999
+      objectReference: {fileID: 0}
+    - target: {fileID: 7704380716202462967, guid: 9737458ddfd8245ec98706a4095d1727, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.51
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -652,7 +660,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 1.61, y: 0.86}
+  m_ConnectedAnchor: {x: 7.46, y: 2.23}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -1632,11 +1640,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7704380716202462967, guid: 9737458ddfd8245ec98706a4095d1727, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 34.07
+      value: 34.6
       objectReference: {fileID: 0}
     - target: {fileID: 7704380716202462967, guid: 9737458ddfd8245ec98706a4095d1727, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.27
+      value: 2.7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1786,7 +1794,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d3c8851e1a8847789239e574fdd04ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hook: {fileID: 249289372}
+  hook: {fileID: 249289371}
   ropeSegments:
   - {fileID: 6026899801920123957, guid: 23a6b73224aeb4df3bb9331edb16b61b, type: 3}
   - {fileID: 6026899801920123957, guid: 23a6b73224aeb4df3bb9331edb16b61b, type: 3}
@@ -1801,7 +1809,7 @@ Transform:
   m_GameObject: {fileID: 1982073290}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.61, y: 0.86, z: 0}
+  m_LocalPosition: {x: 7.46, y: 2.23, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2087,6 +2095,10 @@ PrefabInstance:
       propertyPath: maxJumps
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6929720437948456510, guid: 347fc40811c5b4b0ebcaab89408b0af4, type: 3}
+      propertyPath: rope_hook
+      value: 
+      objectReference: {fileID: 1982073292}
     - target: {fileID: 6929720437948456510, guid: 347fc40811c5b4b0ebcaab89408b0af4, type: 3}
       propertyPath: mainCamera
       value: 
