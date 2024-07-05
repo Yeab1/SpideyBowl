@@ -15,6 +15,7 @@ public class BowlController : MonoBehaviour
     public TMP_Text coinsUI;
     public TMP_Text countDownUI;
     public TMP_Text levelDisplay;
+    // public GameObject rope;
 
     public float InitialSpeed = 10f;
     public float jumpForce = 5f;
@@ -46,6 +47,7 @@ public class BowlController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // rope.SetActive(false);
         _distanceJoint.enabled = false;
         _rb = GetComponent<Rigidbody2D>();
         _rb.velocity = Vector2.right * InitialSpeed;
@@ -250,6 +252,12 @@ public class BowlController : MonoBehaviour
                 _distanceJoint.connectedAnchor = anchorPoint;
                 _distanceJoint.enabled = true;
                 _lineRenderer.enabled = true;
+
+
+                // Rope.instance.is_rope_in_use = true;
+                // Rope.instance.numLinks = 10;
+                // Rope.instance.hook = closestAttachableObject;
+                // rope.SetActive(true);
             }
         }
     }
