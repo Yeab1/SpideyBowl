@@ -23,7 +23,7 @@ public class MenuController : MonoBehaviour
 
     void Start() 
     {
-        if (SoundEffectsManager.instance.getVolume() == 0 &&
+        if (SoundManager.instance.getVolume() == 0 &&
             DontDestroyAudio.instance.getVolume() == 0) {
             Unmute.SetActive(true);
             Mute.SetActive(false);
@@ -31,7 +31,7 @@ public class MenuController : MonoBehaviour
             sfxOriginalVolume = 1;
         } else {
             musicOriginalVolume = DontDestroyAudio.instance.getVolume();
-            sfxOriginalVolume = SoundEffectsManager.instance.getVolume();
+            sfxOriginalVolume = SoundManager.instance.getVolume();
             Unmute.SetActive(false);
             Mute.SetActive(true);
         }
@@ -61,28 +61,25 @@ public class MenuController : MonoBehaviour
     }
 
     void SwitchMenu (GameObject menu) {
-        SoundEffectsManager.instance.PlayButtonClickSound();
+        SoundManager.instance.PlayButtonClickSound();
         pauseMenu.SetActive(false);
         menu.SetActive(true);
     }
 
     public void returnHome() {
-        // time needs to resume so that coroutines following the home
-        // scene can have proper timing. Ex: TutorialController button.
-        Time.timeScale = 1.0f;
-        SoundEffectsManager.instance.PlayButtonClickSound();
+        SoundManager.instance.PlayButtonClickSound();
         SceneManager.LoadScene("Home");
     }
 
     public void mute() {
-        SoundEffectsManager.instance.updateSFXVolume(0f);
+        SoundManager.instance.updateSFXVolume(0f);
         DontDestroyAudio.instance.updateMusicVolume(0f);
         Mute.SetActive(false);
         Unmute.SetActive(true);
     }
 
     public void unMute() {
-        SoundEffectsManager.instance.updateSFXVolume(sfxOriginalVolume);
+        SoundManager.instance.updateSFXVolume(sfxOriginalVolume);
         DontDestroyAudio.instance.updateMusicVolume(musicOriginalVolume);
         Mute.SetActive(true);
         Unmute.SetActive(false);

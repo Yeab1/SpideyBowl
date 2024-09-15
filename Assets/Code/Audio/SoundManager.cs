@@ -4,27 +4,96 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    public static AudioSettingsData audioSettingsData; // data type to save audio settings
+    public static SoundManager instance;
 
-    public static void save_sfx_volume(float sfx_volume) {
-        audioSettingsData.set_sfx_volume(sfx_volume);
-        ProgressDataManager.SaveAudioSettings(audioSettingsData);
+    // Outlets
+    AudioSource audioSource;
+    public AudioClip coinCollectSound;
+    public AudioClip bowlBreakSound;
+    public AudioClip jumpSound;
+    public AudioClip doubleJumpTokenCollectSound;
+    public AudioClip buttonClickSound;
+    public AudioClip lossSound;
+    public AudioClip winSound;
+    public AudioClip slipSound;
+
+    float maxVolume = 1f; // Global volume setting
+
+    void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
-    public static void save_bg_volume(float bg_volume) {
-        audioSettingsData.set_bg_volume(bg_volume);
-        ProgressDataManager.SaveAudioSettings(audioSettingsData);
+    public void updateSFXVolume(float value)
+    {
+        maxVolume = value;
     }
 
-    public static void save_volume(float sfx_volume, float bg_volume) {
-        audioSettingsData.set_volume(sfx_volume, bg_volume);
-        ProgressDataManager.SaveAudioSettings(audioSettingsData);
+    // Adjust the volume of the sound based on the global volume setting
+    float AdjustedVolume(float relativeVolume)
+    {
+        return maxVolume * relativeVolume;
     }
 
-    public static void initialize_volume(float sfx_volume, float bg_volume) {
-        audioSettingsData = new AudioSettingsData();
-        SoundEffectsManager.instance.initialize_volume(sfx_volume);
-        DontDestroyAudio.instance.initialize_volume(bg_volume);
-        audioSettingsData.set_volume(sfx_volume, bg_volume);
+    public void PlayCoinCollectSound()
+    {
+        audioSource.volume = AdjustedVolume(0.2f);
+        audioSource.PlayOneShot(coinCollectSound);
+    }
+
+    public void PlayBowlBreakSound()
+    {
+        audioSource.volume = AdjustedVolume(1f);
+        audioSource.PlayOneShot(bowlBreakSound);
+    }
+
+    public void PlayJumpSound()
+    {
+        audioSource.volume = AdjustedVolume(0.1f);
+        audioSource.PlayOneShot(jumpSound);
+    }
+
+    public void PlayDoubleJumpTokenCollectSound()
+    {
+        audioSource.volume = AdjustedVolume(0.25f);
+        audioSource.PlayOneShot(doubleJumpTokenCollectSound);
+    }
+
+    public void PlayButtonClickSound()
+    {
+        audioSource.volume = AdjustedVolume(0.2f);
+        audioSource.PlayOneShot(buttonClickSound);
+    }
+
+    public void PlayLossSound()
+    {
+        audioSource.volume = AdjustedVolume(0.1f);
+        audioSource.PlayOneShot(lossSound);
+    }
+
+    public void PlayWinSound()
+    {
+        audioSource.volume = AdjustedVolume(0.1f);
+        audioSource.PlayOneShot(winSound);
+    }
+
+    public void PlaySlipSound()
+    {
+        audioSource.volume = AdjustedVolume(0.25f);
+        audioSource.PlayOneShot(slipSound);
+    }
+
+    public float getVolume()
+    {
+        return maxVolume;
     }
 }
