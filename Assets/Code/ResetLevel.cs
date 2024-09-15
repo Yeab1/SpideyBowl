@@ -7,13 +7,6 @@ public class ResetLevel : MonoBehaviour
 {
     public void restartLevel()
     {
-        if (!TutorialUtils.level_needs_tutorial(
-            LevelsList.get_level_name_from_index(
-                GameDataController.getLevel()))) {
-                    SceneManager.LoadScene(LevelsList.get_level_name_from_index(GameDataController.getLevel()));
-                }
-        else {
-            SceneManager.LoadScene("Tutorial");
-        }   
+        SceneManager.LoadScene("level-" + GameDataController.getLevel());
     }
 }

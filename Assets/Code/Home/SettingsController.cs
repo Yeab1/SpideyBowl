@@ -14,13 +14,13 @@ public class SettingsController : MonoBehaviour
     {
         instance = this;
         musicVolume.value = DontDestroyAudio.instance.getVolume();
-        soundEffectsVolume.value = SoundEffectsManager.instance.getVolume();
+        soundEffectsVolume.value = SoundManager.instance.getVolume();
         soundEffectsVolume.onValueChanged.AddListener(delegate { OnSFXVolumeChanged(); });
         musicVolume.onValueChanged.AddListener(delegate { OnMusicVolumeChanged(); });
     }
 
     void OnSFXVolumeChanged() {
-        SoundEffectsManager.instance.updateSFXVolume(soundEffectsVolume.value);
+        SoundManager.instance.updateSFXVolume(soundEffectsVolume.value);
     }
     void OnMusicVolumeChanged() {
         DontDestroyAudio.instance.updateMusicVolume(musicVolume.value);
