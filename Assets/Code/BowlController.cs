@@ -60,9 +60,6 @@ public class BowlController : MonoBehaviour
 
         // display the level
         levelDisplay.text = "Level " + GameDataController.getLevel();
-
-        // initialize the total coins for each level
-        // LevelController.initialize_coins_per_level();
     }
 
     // Update is called once per frame
@@ -78,38 +75,7 @@ public class BowlController : MonoBehaviour
         coinsUI.text = coinCount.ToString();
         if (Input.touchCount > 0)
         {
-            Touch touch = Input.GetTouch(0); // Assuming only one touch is considered for simplicity
-            
-            // Convert touch position to world space
-            Vector2 touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
-
-            // TODO: this raycast does not work. It is here to check if a click happened on a UI element
-            // if so, players should not be able to grapple. I do not know why it does not detect raycast hits
-            // on a UI element. I tried a regular game object with a UI layer and it works. Byt when it is
-            // a button on canvas, it does not work. It also works if I move the regular object in the canvas.
-            // alternative solution: make the left most side of the string not attachable.
-            
-            // Perform a raycast from the touch position
-            // RaycastHit2D hit = Physics2D.Raycast(touch.position, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("UI"));
-
-            // RaycastHit2D hit = Physics2D.Raycast(touchPosition,
-            // Vector2.right,
-            // 0.1f,
-            // LayerMask.GetMask("UI"));
-            
-            float grappleTheshold = Screen.width * 1/3;
-            // If the raycast didn't hit any UI elements, process gameplay input
-            if (touch.position.x > grappleTheshold)
-            {
-                if (touch.phase == TouchPhase.Began && !isPlayerGrounded) {
-                    grappleOnClosestBlock();
-                } 
-                else if (touch.phase == TouchPhase.Ended) {
-                    cutNoodle();
-                }
-            } else {
-                jumpIfPossible();
-            }
+            handleScreenTouch();
         }
 
         // if player hits ground while grappling, cut the grapple off.
@@ -132,6 +98,38 @@ public class BowlController : MonoBehaviour
             MenuController.instance.show();
         }
     }
+
+    public void handleScreenTouch() {
+        Touch touch = Input.GetTouch(0); // First touch
+            
+        // Convert touch position to world space
+        Vector2 touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
+        
+        float grappleThreshold = Screen.width * 1/3;
+
+        // If the raycast didn't hit any UI elements, process gameplay input
+        if (touch.position.x > grappleThreshold)
+        {
+            if (touch.phase == TouchPhase.Began && !isPlayerGrounded) {
+                grappleOnClosestBlock();
+                // while grappling, players should be able to cut noodle by jumping
+            } 
+            else if (touch.phase != TouchPhase.Began &&
+                     touch.phase != TouchPhase.Ended &&
+                     Input.touchCount > 1 &&
+                     Input.GetTouch(1).position.x < grappleThreshold) {
+                // while grappling (after grapple started and before it ended),
+                // players should be able to jump.
+                jumpIfPossible();
+            }
+            else if (touch.phase == TouchPhase.Ended) {
+                cutNoodle();
+            }
+        } else {
+            jumpIfPossible();
+        }
+    }
+
     // TODO: this function and canPlayerDash() are not being used.
     public void dashIfPossible() {
         if (canPlayerDash())
