@@ -299,7 +299,7 @@ MonoBehaviour:
   jumpForce: 5
   playerHeight: 1
   dashForce: 20
-  animator: {fileID: 0}
+  dash_btn: {fileID: 2823196171235093694, guid: 96cdd004cfbb8419b9a6f09c2e2216ee, type: 3}
   countdownSize: 3
   countdownGracePeriod: 2
   coinCount: 0

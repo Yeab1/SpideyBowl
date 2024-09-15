@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class BowlController : MonoBehaviour
 {
+    public static bool is_debug_mode = false;
     public static BowlController instance;
 
     public Camera mainCamera;
@@ -36,6 +37,7 @@ public class BowlController : MonoBehaviour
     public static bool isInDangerZone = false;
     public bool canDash = false;
     public bool isPaused = false;
+
     private void Awake()
     {
         instance = this;
@@ -58,7 +60,6 @@ public class BowlController : MonoBehaviour
 
         // display the level
         levelDisplay.text = "Level " + GameDataController.getLevel();
-        
     }
 
     // Update is called once per frame
@@ -72,33 +73,14 @@ public class BowlController : MonoBehaviour
         updateIsMoving();
 
         coinsUI.text = coinCount.ToString();
-        if (Input.GetKeyDown(KeyCode.Mouse0) && !isPlayerGrounded) {
-            grappleOnClosestBlock();
-        } 
-        else if (Input.GetKeyUp(KeyCode.Mouse0)) {
-            cutNoodle();
+        if (Input.touchCount > 0)
+        {
+            handleScreenTouch();
         }
 
         // if player hits ground while grappling, cut the grapple off.
         if (isGrounded() && _lineRenderer.enabled) {
             cutNoodle();
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space) && canPlayerJump())
-        {
-            if (_distanceJoint.enabled) {
-                jump(jumpForce * 1.2f);
-                // cutt off the noodle if player jumps off of it
-                cutNoodle();
-            } else {
-                hasCollectedJumpToken = false;
-                jump(jumpForce);
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.D) && canPlayerDash())
-        {
-            dash();
         }
 
         if (_distanceJoint.enabled)
@@ -114,6 +96,59 @@ public class BowlController : MonoBehaviour
         // check for pause
         if (Input.GetKeyDown(KeyCode.Escape)) {
             MenuController.instance.show();
+        }
+    }
+
+    public void handleScreenTouch() {
+        Touch touch = Input.GetTouch(0); // First touch
+            
+        // Convert touch position to world space
+        Vector2 touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
+        
+        float grappleThreshold = Screen.width * 1/3;
+
+        // If the raycast didn't hit any UI elements, process gameplay input
+        if (touch.position.x > grappleThreshold)
+        {
+            if (touch.phase == TouchPhase.Began && !isPlayerGrounded) {
+                grappleOnClosestBlock();
+                // while grappling, players should be able to cut noodle by jumping
+            } 
+            else if (touch.phase != TouchPhase.Began &&
+                     touch.phase != TouchPhase.Ended &&
+                     Input.touchCount > 1 &&
+                     Input.GetTouch(1).position.x < grappleThreshold) {
+                // while grappling (after grapple started and before it ended),
+                // players should be able to jump.
+                jumpIfPossible();
+            }
+            else if (touch.phase == TouchPhase.Ended) {
+                cutNoodle();
+            }
+        } else {
+            jumpIfPossible();
+        }
+    }
+
+    // TODO: this function and canPlayerDash() are not being used.
+    public void dashIfPossible() {
+        if (canPlayerDash())
+        {
+            dash();
+        }
+    }
+
+    public void jumpIfPossible() {
+        if (canPlayerJump())
+        {
+            if (_distanceJoint.enabled) {
+                jump(jumpForce * 1.2f);
+                // cut off the noodle if player jumps off of it
+                cutNoodle();
+            } else {
+                hasCollectedJumpToken = false;
+                jump(jumpForce);
+            }
         }
     }
 
@@ -219,11 +254,11 @@ public class BowlController : MonoBehaviour
 
     void jump(float force)
     {
-        SoundManager.instance.PlayJumpSound();
+        SoundEffectsManager.instance.PlayJumpSound();
         _rb.velocity = new Vector2(_rb.velocity.x, force);
     }
 
-    void dash()
+    public void dash()
     {
         // apply a force to the right
         _rb.velocity = new Vector2(1 * dashForce, _rb.velocity.y);
@@ -300,7 +335,7 @@ public class BowlController : MonoBehaviour
 
     public void breakBowl() {
         animator.SetBool("IsBroken", true);
-        SoundManager.instance.PlayBowlBreakSound();
+        SoundEffectsManager.instance.PlayBowlBreakSound();
         StartCoroutine(PlayAnimationThenChangeScene());
     }
 
@@ -319,7 +354,7 @@ public class BowlController : MonoBehaviour
 
     public void gameOver()
     {
-        SoundManager.instance.PlayLossSound();
+        SoundEffectsManager.instance.PlayLossSound();
         // Update the global total coin count to show on the game over screen
         SceneManager.LoadScene("GameOver");
     }

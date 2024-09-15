@@ -9,12 +9,20 @@ public class DestinationController : MonoBehaviour
     {
         if (other.gameObject.GetComponent<BowlController>())
         {
-            // update the total coin count to display on Win screen
-            GameDataController.updateCurrentLevelCoins(BowlController.instance.coinCount);
-            GameDataController.updateTotalCoins();
-
-            SoundManager.instance.PlayWinSound();
-            SceneManager.LoadScene("win");
+            StartCoroutine(WinRoutine());
         }
+    }
+
+    IEnumerator WinRoutine()
+    {
+        // Update the total coin count to display on the Win screen
+        GameDataController.updateCurrentLevelCoins(BowlController.instance.coinCount);
+
+        // Play win sound
+        SoundEffectsManager.instance.PlayWinSound();
+
+        yield return new WaitForSeconds(1f); // Wait for 1 second
+
+        SceneManager.LoadScene("win");
     }
 }

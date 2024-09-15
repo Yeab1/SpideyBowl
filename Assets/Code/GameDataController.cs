@@ -5,9 +5,8 @@ using UnityEngine;
 public class GameDataController : MonoBehaviour
 {
     public static GameDataController instance;
-    static int currentLevel = 1;
-    static int lastLevel = 5;
-    static int total_coins = 0;
+    static int currentLevel = 0;
+    static int lastLevel = LevelsList.get_number_of_levels();
     static int current_level_coins = 0;
 
     public static void setLevel(int level) {
@@ -32,18 +31,5 @@ public class GameDataController : MonoBehaviour
 
     public static int getCurrentLevelCoins() {
         return current_level_coins;
-    }
-    // Only call this when a player wins. 
-    // They don't get to keep their coins if they lose.
-    public static void updateTotalCoins() {
-        total_coins += current_level_coins;
-    }
-
-    public static int getTotalCoins() {
-        return total_coins;
-    }
-
-    public static void revertTotalCoinUpdate() {
-        total_coins -= current_level_coins;
     }
 }
