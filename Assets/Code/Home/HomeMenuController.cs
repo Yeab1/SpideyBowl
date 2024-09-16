@@ -44,13 +44,12 @@ public class HomeMenuController : MonoBehaviour
     public void StartGame() {
         SoundEffectsManager.instance.PlayButtonClickSound();
         
-        StartLevel(GameDataController.getLevel());
+        StartLevel(GameDataController.get_max_unlocked_level());
     }
 
     public static void StartLevel (int level) {
         if (!BowlController.is_debug_mode) {
             if (GameDataController.is_level_locked(level)) {
-                Debug.Log("Locked");
                 return;
             }
         }

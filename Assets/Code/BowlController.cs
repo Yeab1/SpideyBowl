@@ -362,12 +362,4 @@ public class BowlController : MonoBehaviour
     public float getDistance(Vector2 point1, Vector2 point2) {
         return (point1 - point2).magnitude;
     }
-
-    // returns the number of segments needed to connect the bowl and a fixture
-    public int getNoodleSegmentCount(Vector2 anchor_point) {
-        Vector2 bowl_center = new Vector2(this.transform.position.x, this.transform.position.y);
-        float distance = getDistance(bowl_center, anchor_point);
-        Debug.Log(distance);
-        return (int) (distance / 0.75f);
-    }
 }

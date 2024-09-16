@@ -76,15 +76,12 @@ public class GameDataController : MonoBehaviour
         if (progress != null) {
             return; // progress data is already initialized
         }
-        Debug.Log("Initializing Progress");
         // initialize the player's star collection progress
         progress = ProgressDataManager.LoadProgress();
         if (progress == null || progress.get_max_unlocked_level() == 0) {
             // if there is no progress, start from level 1
-            Debug.Log("defaulting max level to 0");
             GameDataController.setLevel(1);
         } else {
-            Debug.Log("Max unlocked level found: " + progress.get_max_unlocked_level());
             GameDataController.setLevel(progress.get_max_unlocked_level());
         }
 

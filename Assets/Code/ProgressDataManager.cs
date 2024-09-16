@@ -54,13 +54,6 @@ public class ProgressData
         }
         return sum;
     }
-
-    public void print_as_string() {
-        Debug.Log("max_unlocked_level: " + max_unlocked_level);
-        for (int i = 0; i < collected_stars_per_level.Length; i++) {
-            Debug.Log((i+1) + " : " + collected_stars_per_level[i]);
-        }
-    }
 }
 
 // a class that represents a single progress.
@@ -123,13 +116,11 @@ public class ProgressDataManager : MonoBehaviour
     public static ProgressData LoadProgress() {
         if (File.Exists(progressFilePath))
         {
-            Debug.Log("Progress Found");
             string jsonData = File.ReadAllText(progressFilePath);
             return JsonUtility.FromJson<ProgressData>(jsonData);
         }
         else
         {
-            Debug.Log("No Progress Found");
             return new ProgressData();
         }
     }
