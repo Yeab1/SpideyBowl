@@ -8,7 +8,7 @@ public class TutorialUtils : MonoBehaviour
     public static HashSet<string> levels_with_tutorial = new HashSet<string>(new string[] {
         "Level-1-0",
         "Level-1-1",
-        "Level-1-3",
+        "Level-1-4",
         "Level-3-0",
         "Level-4-0",
         "Level-5-0",
@@ -17,8 +17,8 @@ public class TutorialUtils : MonoBehaviour
         structure of the dictionary below:
             tutorial_details = {
                 level_name: {
-                    "tutorial_title": "",
-                    "tutorial_body": ""
+                    "tutorial_title": "...",
+                    "tutorial_body": "..."
                 }
             }
     */
@@ -36,7 +36,7 @@ public class TutorialUtils : MonoBehaviour
             }
         },
         { 
-            "Level-1-3", new Dictionary<string, string> {
+            "Level-1-4", new Dictionary<string, string> {
                 {"tutorial_title", "Slippery tables"},
                 {"tutorial_body", "Oily tables can give you a bit more speed."},
             }

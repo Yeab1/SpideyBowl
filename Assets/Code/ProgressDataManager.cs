@@ -8,32 +8,58 @@ using System.IO;
 public class ProgressData
 {
     public int[] collected_stars_per_level;
-    public int max_level;
+    public int max_unlocked_level;
 
-    public ProgressData(int[] collected_stars_per_level, int max_level) {
+    public ProgressData(int[] collected_stars_per_level, int max_unlocked_level) {
         this.collected_stars_per_level = collected_stars_per_level; 
-        this.max_level = max_level;
+        this.max_unlocked_level = max_unlocked_level;
     }
 
     public ProgressData() {
         this.collected_stars_per_level = new int[GameDataController.getLastLevel()];
-        this.max_level = 1;
+        this.max_unlocked_level = 1;
     }
 
     public void set_collected_stars_per_level(int[] collected_stars_per_level) {
         this.collected_stars_per_level = collected_stars_per_level;
     }
 
+    public void set_collected_stars_for_level(int level, int stars) {
+        if (collected_stars_per_level[level - 1] < stars) {
+            collected_stars_per_level[level - 1] = stars;
+        }
+    }
+
     public void set_max_unlocked_level(int max_unlocked_level) {
-        this.max_level = max_unlocked_level;
+        this.max_unlocked_level = max_unlocked_level;
     }
 
     public int[] get_collected_stars_per_level() {
         return collected_stars_per_level;
     }
 
-    public int get_max_level() {
-        return max_level;
+    public int get_max_unlocked_level() {
+        return max_unlocked_level;
+    }
+
+    public int get_collected_stars(int level) {
+        return collected_stars_per_level[level - 1];
+    }
+
+    // returns the total number of stars collected through all levels
+    public int get_total_stars() {
+        int sum = 0;
+        for (int i = 0; i < collected_stars_per_level.Length; i++) {
+            sum += collected_stars_per_level[i];
+        }
+        return sum;
+    }
+
+    public void print_as_string() {
+        Debug.Log("max_unlocked_level: " + max_unlocked_level);
+        for (int i = 0; i < collected_stars_per_level.Length; i++) {
+            Debug.Log((i+1) + " : " + collected_stars_per_level[i]);
+        }
     }
 }
 
@@ -97,12 +123,14 @@ public class ProgressDataManager : MonoBehaviour
     public static ProgressData LoadProgress() {
         if (File.Exists(progressFilePath))
         {
+            Debug.Log("Progress Found");
             string jsonData = File.ReadAllText(progressFilePath);
             return JsonUtility.FromJson<ProgressData>(jsonData);
         }
         else
         {
-            return null;
+            Debug.Log("No Progress Found");
+            return new ProgressData();
         }
     }
 

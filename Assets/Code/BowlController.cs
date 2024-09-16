@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class BowlController : MonoBehaviour
 {
-    public static bool is_debug_mode = false;
+    public static bool is_debug_mode = true;
     public static BowlController instance;
 
     public Camera mainCamera;
@@ -15,8 +15,6 @@ public class BowlController : MonoBehaviour
     public TMP_Text coinsUI;
     public TMP_Text countDownUI;
     public TMP_Text levelDisplay;
-    public GameObject rope;
-    public Transform rope_hook;
 
     public float InitialSpeed = 10f;
     public float jumpForce = 5f;
@@ -48,9 +46,6 @@ public class BowlController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rope.SetActive(false);
-        Rope.instance.is_rope_in_use = false;
-        Rope.instance.should_generate_rope = false;
         _distanceJoint.enabled = false;
         _rb = GetComponent<Rigidbody2D>();
         _rb.velocity = Vector2.right * InitialSpeed;
@@ -65,9 +60,6 @@ public class BowlController : MonoBehaviour
 
         // display the level
         levelDisplay.text = "Level " + GameDataController.getLevel();
-
-        // initialize the total coins for each level
-        // LevelController.initialize_coins_per_level();
     }
 
     // Update is called once per frame
@@ -79,10 +71,6 @@ public class BowlController : MonoBehaviour
         // update groundedness state
         updateGrounded();
         updateIsMoving();
-
-        if (!_lineRenderer.enabled) {
-            rope_hook.position = transform.position;
-        }
 
         coinsUI.text = coinCount.ToString();
         if (Input.touchCount > 0)
@@ -259,12 +247,6 @@ public class BowlController : MonoBehaviour
                 _distanceJoint.connectedAnchor = anchorPoint;
                 _distanceJoint.enabled = true;
                 _lineRenderer.enabled = true;
-
-                Rope.instance.numLinks = getNoodleSegmentCount(anchorPoint);
-                rope_hook.position = anchorPoint;
-                Rope.instance.is_rope_in_use = true;
-                Rope.instance.should_generate_rope = true;
-                rope.SetActive(true);
             }
         }
     }
@@ -344,9 +326,6 @@ public class BowlController : MonoBehaviour
     void cutNoodle() {
         _distanceJoint.enabled = false;
         _lineRenderer.enabled = false;
-        Rope.instance.is_rope_in_use = false;
-        Rope.instance.should_generate_rope = false;
-        rope.SetActive(false);
     }
 
     public void stopBowl() {

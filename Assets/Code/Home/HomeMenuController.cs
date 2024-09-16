@@ -11,30 +11,9 @@ public class HomeMenuController : MonoBehaviour
     public GameObject HomeMenu;
     public GameObject LevelsMenu;
     public GameObject SettingsMenu;
-    public static ProgressData progress;
-    void Awake()
-    {
-        instance = this;
-        // initialize the player's star collection progress
-        progress = LevelController.load_progress();
-        if (progress == null || progress.get_max_level() == 0) {
-            // if there is no progress, start from level 1
-            GameDataController.setLevel(1);
-        } else {
-            GameDataController.setLevel(progress.get_max_level());
-        }
-
-        // initialize settings
-        AudioSettingsData audio_settings = ProgressDataManager.LoadAudioSettings();
-        if (audio_settings != null) {
-            SoundManager.initialize_volume(
-                        audio_settings.get_sfx_volume(), 
-                        audio_settings.get_bg_volume());
-        } else {
-            SoundManager.initialize_volume(0.2f, 0.2f);
-        }
-    }
+    
     void Start() {
+        instance = this;
         show();
     }
 
@@ -70,7 +49,7 @@ public class HomeMenuController : MonoBehaviour
 
     public static void StartLevel (int level) {
         if (!BowlController.is_debug_mode) {
-            if (progress == null && level != 1 || progress.get_max_level() < level) {
+            if (GameDataController.is_level_locked(level)) {
                 Debug.Log("Locked");
                 return;
             }
@@ -107,6 +86,6 @@ public class HomeMenuController : MonoBehaviour
     // for debugging purposes only. Don't forget to remove 
     // the clear progress button in settings
     public void clearAllProgress() {
-        LevelController.clear_all_progress();
+        GameDataController.clear_all_progress();
     }
 }

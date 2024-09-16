@@ -69,7 +69,7 @@ public class LevelSelect : MonoBehaviour
                 b.onClick.AddListener(() => HomeMenuController.StartLevel(level));
 
                 // disable unearned stars for level
-                int stars_earned = LevelController.get_collected_stars(level);
+                int stars_earned = GameDataController.get_collected_stars(level);
                 switch (stars_earned) {
                     case 0:
                         created_prefab.transform.Find("Star1").gameObject.SetActive(false);
@@ -92,11 +92,10 @@ public class LevelSelect : MonoBehaviour
     }
 
     bool is_locked(int level) {
-        // TODO: why is progress loaded for every level?
-        ProgressData progress = LevelController.load_progress();
+        ProgressData progress = GameDataController.get_progress();
         // TODO: Debug: revert this change
         if (!BowlController.is_debug_mode) {
-            return (progress == null && level != 1 || progress.get_max_level() < level);
+            return (progress == null && level != 1 || progress.get_max_unlocked_level() < level);
         }
         return false;
     }
