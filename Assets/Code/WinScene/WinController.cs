@@ -40,7 +40,6 @@ public class WinController : MonoBehaviour
         // max unlocked level should only be updated when player unlocks a new level
         if (current_level == max_unlocked_level) {
             GameDataController.set_max_unlocked_level(max_unlocked_level + 1);
-            Debug.Log("incremented max_unlocked_level to: " + GameDataController.get_max_unlocked_level());
         } else {
             GameDataController.set_max_unlocked_level(max_unlocked_level);
         }
