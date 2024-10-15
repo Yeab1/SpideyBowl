@@ -349,12 +349,15 @@ public class BowlController : MonoBehaviour
         // Wait until the animation is complete
         yield return new WaitForSeconds(1f);
 
+        // Wait for loss sound to end before changing scene to gameover.
+        SoundEffectsManager.instance.PlayLossSound();
+        yield return new WaitForSeconds(3f);
+
         BowlController.instance.gameOver();
     }
 
     public void gameOver()
     {
-        SoundEffectsManager.instance.PlayLossSound();
         // Update the global total coin count to show on the game over screen
         SceneManager.LoadScene("GameOver");
     }
