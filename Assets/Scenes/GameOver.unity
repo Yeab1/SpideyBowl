@@ -780,7 +780,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb68bf370e49a49d880bdc0fecee79d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentLevelCoinsUI: {fileID: 0}
 --- !u!114 &1212146950
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -794,7 +793,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9716981, g: 0.42421052, b: 0.21542363, a: 1}
+  m_Color: {r: 0.9339623, g: 0.4537647, b: 0.62008214, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
