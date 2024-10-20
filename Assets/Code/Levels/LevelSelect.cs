@@ -20,6 +20,7 @@ public class LevelSelect : MonoBehaviour
     public int current_section = 0; // breakup levels list into sections
     public GameObject next_section_btn;
     public GameObject previous_section_btn;
+    public TMP_FontAsset font;
 
     void Start () {
         instance = this;
@@ -62,6 +63,7 @@ public class LevelSelect : MonoBehaviour
                 // update the text on the button to reflect the level number
                 GameObject text_field = created_prefab.transform.Find("Level Number").gameObject;
                 text_field.GetComponent<TMP_Text>().text = "" + (level);
+                text_field.GetComponent<TMP_Text>().font = font;
                 
                 // set the onclick function of the button with the level number
                 Button b = created_prefab.GetComponent<Button>();

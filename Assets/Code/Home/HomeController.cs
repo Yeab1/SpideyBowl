@@ -9,12 +9,13 @@ public class HomeController : MonoBehaviour
 
     void Awake()
     {
-        GameDataController.initialize_progress();
+        
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        GameDataController.initialize_progress();
         star_count.text = "" + GameDataController.get_total_stars();
     }
 }
