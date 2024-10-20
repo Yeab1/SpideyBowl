@@ -40,6 +40,7 @@ public class SoundEffectsManager : MonoBehaviour
     public void updateSFXVolume(float value)
     {
         maxVolume = value;
+        audioSource.volume = maxVolume;
         SoundManager.save_sfx_volume(value);
     }
 
