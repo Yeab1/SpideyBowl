@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class BowlController : MonoBehaviour
 {
-    public static bool is_debug_mode = false;
+    public static bool is_debug_mode = true;
     public static BowlController instance;
 
     public Camera mainCamera;
@@ -89,9 +89,6 @@ public class BowlController : MonoBehaviour
         }
 
         // Debug.DrawRay(transform.position, Vector2.down * playerHeight);
-
-        // update animation for dash (hot)
-        animator.SetBool("IsHot", canDash);
 
         // check for pause
         if (Input.GetKeyDown(KeyCode.Escape)) {
@@ -263,12 +260,6 @@ public class BowlController : MonoBehaviour
         // apply a force to the right
         _rb.velocity = new Vector2(1 * dashForce, _rb.velocity.y);
         canDash = false;
-
-        // remove the pepper
-        // currently, the pepper is the only child so it will be at idx 1
-        Transform pepperTransform = transform.GetChild(0);
-        GameObject pepperGameObject = pepperTransform.gameObject;
-        pepperGameObject.SetActive(false);
     }
 
     IEnumerator checkStaticState()
