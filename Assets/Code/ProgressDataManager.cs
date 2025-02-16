@@ -62,6 +62,8 @@ public class AudioSettingsData
 {
     public float sfx_volume;
     public float bg_volume;
+    public float previous_sfx_volume = 1f;
+    public float previous_bg_volume = 1f;
     public AudioSettingsData(float sfx_volume,
                         float bg_volume) {
         this.sfx_volume = sfx_volume;
@@ -74,14 +76,18 @@ public class AudioSettingsData
     }
 
     public void set_sfx_volume(float sfx_volume) {
+        this.previous_sfx_volume = this.sfx_volume;
         this.sfx_volume = sfx_volume;
     }
 
     public void set_bg_volume(float bg_volume) {
+        this.previous_bg_volume = this.bg_volume;
         this.bg_volume = bg_volume;
     }
 
     public void set_volume(float sfx_volume, float bg_volume) {
+        this.previous_bg_volume = this.bg_volume;
+        this.previous_sfx_volume = this.sfx_volume;
         this.sfx_volume = sfx_volume;
         this.bg_volume = bg_volume;
     }
@@ -92,6 +98,14 @@ public class AudioSettingsData
 
     public float get_bg_volume() {
         return bg_volume;
+    }
+
+    public float get_previous_bg_volume() {
+        return previous_bg_volume;
+    }
+
+    public float get_previous_sfx_volume() {
+        return previous_sfx_volume;
     }
 }
 
@@ -109,8 +123,15 @@ public class ProgressDataManager : MonoBehaviour
     }
 
     public static void SaveAudioSettings(AudioSettingsData data) {
+        Debug.Log("Saving new bg audio to file: " + data.get_bg_volume());
+        Debug.Log("Saving prev bg audio to file: " + data.get_previous_bg_volume());
         string jsonData = JsonUtility.ToJson(data);
         File.WriteAllText(AudioSettingsFilePath, jsonData);
+
+        string jsonData2 = File.ReadAllText(AudioSettingsFilePath);
+        AudioSettingsData settings = JsonUtility.FromJson<AudioSettingsData>(jsonData2);
+        Debug.Log("Saved new bg audio to file: " + settings.get_bg_volume());
+        Debug.Log("Saved prev bg audio to file: " + settings.get_previous_bg_volume());
     }
 
     public static ProgressData LoadProgress() {
@@ -125,11 +146,15 @@ public class ProgressDataManager : MonoBehaviour
         }
     }
 
+    // Returns the audio settings saved on file, returns null if
+    // there is no saved settins file.
     public static AudioSettingsData LoadAudioSettings() {
         if (File.Exists(AudioSettingsFilePath))
         {
             string jsonData = File.ReadAllText(AudioSettingsFilePath);
-            return JsonUtility.FromJson<AudioSettingsData>(jsonData);
+            AudioSettingsData settings = JsonUtility.FromJson<AudioSettingsData>(jsonData);
+            Debug.Log("loading from file, prev bg audio: " + settings.get_previous_bg_volume());
+            return settings;
         }
         else
         {

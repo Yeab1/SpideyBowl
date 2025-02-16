@@ -22,6 +22,7 @@ public class SoundManager : MonoBehaviour
     }
 
     public static void initialize_volume(float sfx_volume, float bg_volume) {
+        Debug.Log("initializing volume: " + bg_volume);
         audioSettingsData = new AudioSettingsData();
         SoundEffectsManager.instance.initialize_volume(sfx_volume);
         DontDestroyAudio.instance.initialize_volume(bg_volume);

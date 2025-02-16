@@ -12,9 +12,6 @@ public class MenuController : MonoBehaviour
     public GameObject pauseMenu;
     public GameObject Mute;
     public GameObject Unmute;
-    public float musicOriginalVolume;
-    public float sfxOriginalVolume;
-    
     void Awake()
     {
         instance = this;
@@ -27,11 +24,7 @@ public class MenuController : MonoBehaviour
             DontDestroyAudio.instance.getVolume() == 0) {
             Unmute.SetActive(true);
             Mute.SetActive(false);
-            musicOriginalVolume = 1;
-            sfxOriginalVolume = 1;
         } else {
-            musicOriginalVolume = DontDestroyAudio.instance.getVolume();
-            sfxOriginalVolume = SoundEffectsManager.instance.getVolume();
             Unmute.SetActive(false);
             Mute.SetActive(true);
         }
@@ -53,7 +46,6 @@ public class MenuController : MonoBehaviour
         if (BowlController.instance != null) {
             BowlController.instance.isPaused = false;
         }
-        
     }
 
     public void ShowPauseMenu () {
@@ -67,23 +59,32 @@ public class MenuController : MonoBehaviour
     }
 
     public void returnHome() {
-        // time needs to resume so that coroutines following the home
+        // Time needs to resume so that coroutines following the home
         // scene can have proper timing. Ex: TutorialController button.
         Time.timeScale = 1.0f;
         SoundEffectsManager.instance.PlayButtonClickSound();
         SceneManager.LoadScene("Home");
     }
 
-    public void mute() {
-        SoundEffectsManager.instance.updateSFXVolume(0f);
+    public void mute() {        
+        // Mute the volume
         DontDestroyAudio.instance.updateMusicVolume(0f);
+        SoundEffectsManager.instance.updateSFXVolume(0f);
+        
+        // Swap the mute asset to an unmute button.
         Mute.SetActive(false);
         Unmute.SetActive(true);
     }
 
     public void unMute() {
-        SoundEffectsManager.instance.updateSFXVolume(sfxOriginalVolume);
-        DontDestroyAudio.instance.updateMusicVolume(musicOriginalVolume);
+        // Retrieve the previous volume.
+        GameDataController.reset_audio_settings();
+        SoundEffectsManager.instance.updateSFXVolume(
+            GameDataController.get_audio_settings().get_previous_sfx_volume());
+        DontDestroyAudio.instance.updateMusicVolume(
+            GameDataController.get_audio_settings().get_previous_bg_volume());
+
+        // Swap the unmute asset to a mute button.
         Mute.SetActive(true);
         Unmute.SetActive(false);
     }

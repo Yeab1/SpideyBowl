@@ -13,6 +13,7 @@ public class WinController : MonoBehaviour
     public TMP_Text currentLevelCoinsUI;
     public TMP_Text stars_collected_UI;
     public TMP_Text total_stars_collected_UI;
+    public GameObject projectileStar;
 
     public float three_star_threshold = 0.9f;
     public float two_star_threshold = 0.6f;
@@ -21,7 +22,8 @@ public class WinController : MonoBehaviour
     private void Awake()
     {
         int currentCoins = GameDataController.getCurrentLevelCoins();
-        currentLevelCoinsUI.text = "" + currentCoins;
+        int total_possible_coins = LevelController.get_total_expected_coins(GameDataController.getLevel());
+        currentLevelCoinsUI.text = "" + currentCoins + "/" + total_possible_coins + "=";
 
         instance = this;
         if (GameDataController.getLevel() == GameDataController.getLastLevel()) {

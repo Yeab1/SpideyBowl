@@ -9,6 +9,7 @@ public class GameDataController : MonoBehaviour
     static int lastLevel = LevelsList.get_number_of_levels();
     static int current_level_coins = 0;
 
+    static AudioSettingsData audio_settings;
     static ProgressData progress;
 
     public static void setLevel(int level) {
@@ -72,6 +73,10 @@ public class GameDataController : MonoBehaviour
         return progress == null && level != 1 || progress.get_max_unlocked_level() < level;
     }
 
+    public static AudioSettingsData get_audio_settings() {
+        return audio_settings;
+    }
+
     public static void initialize_progress() {
         if (progress != null) {
             return; // progress data is already initialized
@@ -86,7 +91,20 @@ public class GameDataController : MonoBehaviour
         }
 
         // initialize settings
-        AudioSettingsData audio_settings = ProgressDataManager.LoadAudioSettings();
+        audio_settings = ProgressDataManager.LoadAudioSettings();
+        if (audio_settings != null) {
+            SoundManager.initialize_volume(
+                        audio_settings.get_sfx_volume(), 
+                        audio_settings.get_bg_volume());
+        } else {
+            SoundManager.initialize_volume(0.2f, 0.2f);
+        }
+    }
+
+    // Resets audio settings to the settings saved on file.
+    public static void reset_audio_settings() {
+        // initialize settings
+        audio_settings = ProgressDataManager.LoadAudioSettings();
         if (audio_settings != null) {
             SoundManager.initialize_volume(
                         audio_settings.get_sfx_volume(), 
@@ -101,6 +119,12 @@ public class GameDataController : MonoBehaviour
     }
 
     public static void clear_all_progress() {
+        // Clear all audio settings
+        AudioSettingsData audio_settings = new AudioSettingsData();
+        ProgressDataManager.SaveAudioSettings(audio_settings);
+        reset_audio_settings();
+
+        // Clear all progress
         ProgressData progress = new ProgressData();
         ProgressDataManager.SaveProgress(progress);
         ProgressDataManager.LoadProgress();
