@@ -9,7 +9,6 @@ public class Customization : MonoBehaviour
 
     public void ChangeSkin(Sprite new_skin) {
         if (selected_skin != new_skin) {
-            Debug.Log("Chaning Skins");
             selected_skin = new_skin;
         }
     }

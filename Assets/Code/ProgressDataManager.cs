@@ -123,15 +123,11 @@ public class ProgressDataManager : MonoBehaviour
     }
 
     public static void SaveAudioSettings(AudioSettingsData data) {
-        Debug.Log("Saving new bg audio to file: " + data.get_bg_volume());
-        Debug.Log("Saving prev bg audio to file: " + data.get_previous_bg_volume());
         string jsonData = JsonUtility.ToJson(data);
         File.WriteAllText(AudioSettingsFilePath, jsonData);
 
         string jsonData2 = File.ReadAllText(AudioSettingsFilePath);
         AudioSettingsData settings = JsonUtility.FromJson<AudioSettingsData>(jsonData2);
-        Debug.Log("Saved new bg audio to file: " + settings.get_bg_volume());
-        Debug.Log("Saved prev bg audio to file: " + settings.get_previous_bg_volume());
     }
 
     public static ProgressData LoadProgress() {
@@ -153,7 +149,6 @@ public class ProgressDataManager : MonoBehaviour
         {
             string jsonData = File.ReadAllText(AudioSettingsFilePath);
             AudioSettingsData settings = JsonUtility.FromJson<AudioSettingsData>(jsonData);
-            Debug.Log("loading from file, prev bg audio: " + settings.get_previous_bg_volume());
             return settings;
         }
         else

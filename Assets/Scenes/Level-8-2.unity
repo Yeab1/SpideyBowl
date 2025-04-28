@@ -359,6 +359,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1544928634874404416, guid: 2c3419b3e819e4cf88dd9296e161579f, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1544928634874404416, guid: 2c3419b3e819e4cf88dd9296e161579f, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1544928634874404416, guid: 2c3419b3e819e4cf88dd9296e161579f, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3472349434638385479, guid: 2c3419b3e819e4cf88dd9296e161579f, type: 3}
       propertyPath: m_Name
       value: Table_1_slippery (9)

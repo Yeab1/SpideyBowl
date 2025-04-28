@@ -21,10 +21,8 @@ public class TutorialUtils : MonoBehaviour
     }
 
     public static void setupTutorialSprites(Sprite[] images) {
-        Debug.Log("setting up tutorial images");
         for (int i = 0; i < images.Length; i++) {
             tutorial_images.Add(images[i].name, images[i]);
-            Debug.Log(images[i].name);
         }
     }
 

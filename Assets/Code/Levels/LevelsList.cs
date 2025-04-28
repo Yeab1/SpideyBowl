@@ -57,7 +57,6 @@ public class LevelsList : MonoBehaviour
                 return i;
             }
         }
-        Debug.Log("Could not find "+ level + " in Level_string_list");
         return -1;
     }
 }
