@@ -117,20 +117,4 @@ public class GameDataController : MonoBehaviour
     public static void save_current_progress() {
         ProgressDataManager.SaveProgress(progress);
     }
-
-    public static void clear_all_progress() {
-        // Clear all audio settings
-        AudioSettingsData audio_settings = new AudioSettingsData();
-        ProgressDataManager.SaveAudioSettings(audio_settings);
-        reset_audio_settings();
-
-        // Clear all progress
-        ProgressData progress = new ProgressData();
-        ProgressDataManager.SaveProgress(progress);
-        ProgressDataManager.LoadProgress();
-
-        // reset UI on level select window after clearing process
-        LevelSelect.instance.destroy_all_level_prefabs();
-        LevelSelect.instance.setup_level_select_grid();
-    }
 }

@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class BowlController : MonoBehaviour
 {
-    public static bool is_debug_mode = true;
     public static BowlController instance;
 
     public Camera mainCamera;
@@ -125,14 +124,6 @@ public class BowlController : MonoBehaviour
         }
     }
 
-    // TODO: this function and canPlayerDash() are not being used.
-    public void dashIfPossible() {
-        if (canPlayerDash())
-        {
-            dash();
-        }
-    }
-
     public void jumpIfPossible() {
         if (canPlayerJump())
         {
@@ -151,14 +142,6 @@ public class BowlController : MonoBehaviour
     {
         // player can jump if on the ground, has a single use jump token or is grappling
         return isPlayerGrounded || hasCollectedJumpToken || _lineRenderer.enabled;
-    }
-
-    bool canPlayerDash()
-    {
-        // if on the ground, reset dashes
-        if (isPlayerGrounded) return false;
-        if (canDash) return true;
-        return false;
     }
 
     void updateIsMoving()

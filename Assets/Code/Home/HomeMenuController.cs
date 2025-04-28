@@ -53,10 +53,8 @@ public class HomeMenuController : MonoBehaviour
     }
 
     public static void StartLevel (int level) {
-        if (!BowlController.is_debug_mode) {
-            if (GameDataController.is_level_locked(level)) {
-                return;
-            }
+        if (GameDataController.is_level_locked(level)) {
+            return;
         }
     
         SoundEffectsManager.instance.PlayButtonClickSound();
@@ -84,12 +82,5 @@ public class HomeMenuController : MonoBehaviour
         LevelSelect.instance.destroy_all_level_prefabs();
         LevelSelect.instance.current_section -= 1;
         LevelSelect.instance.setup_level_select_grid();
-    }
-
-    // TODO: Delete for release
-    // for debugging purposes only. Don't forget to remove 
-    // the clear progress button in settings
-    public void clearAllProgress() {
-        GameDataController.clear_all_progress();
     }
 }

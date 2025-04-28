@@ -95,11 +95,7 @@ public class LevelSelect : MonoBehaviour
 
     bool is_locked(int level) {
         ProgressData progress = GameDataController.get_progress();
-        // TODO: Debug: revert this change
-        if (!BowlController.is_debug_mode) {
-            return (progress == null && level != 1 || progress.get_max_unlocked_level() < level);
-        }
-        return false;
+        return (progress == null && level != 1 || progress.get_max_unlocked_level() < level);
     }
 
     public void destroy_all_level_prefabs() {
