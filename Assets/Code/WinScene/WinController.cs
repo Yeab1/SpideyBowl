@@ -12,7 +12,6 @@ public class WinController : MonoBehaviour
     public GameObject nextLevelBtn;
     public TMP_Text currentLevelCoinsUI;
     public TMP_Text stars_collected_UI;
-    public TMP_Text total_stars_collected_UI;
     public GameObject projectileStar;
 
     public float three_star_threshold = 0.9f;
@@ -23,7 +22,7 @@ public class WinController : MonoBehaviour
     {
         int currentCoins = GameDataController.getCurrentLevelCoins();
         int total_possible_coins = LevelController.get_total_expected_coins(GameDataController.getLevel());
-        currentLevelCoinsUI.text = "" + currentCoins + "/" + total_possible_coins + "=";
+        currentLevelCoinsUI.text = "" + currentCoins + "/" + total_possible_coins;
 
         instance = this;
         if (GameDataController.getLevel() == GameDataController.getLastLevel()) {
@@ -37,7 +36,6 @@ public class WinController : MonoBehaviour
         GameDataController.update_starts_for_level(GameDataController.getLevel(), awarded_stars);
 
         stars_collected_UI.text = "" + awarded_stars;
-        total_stars_collected_UI.text = "" + GameDataController.get_total_stars();
 
         // max unlocked level should only be updated when player unlocks a new level
         if (current_level == max_unlocked_level) {

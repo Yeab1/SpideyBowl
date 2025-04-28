@@ -5,8 +5,6 @@ using TMPro;
 
 public class HomeController : MonoBehaviour
 {
-    public TMP_Text star_count;
-
     void Awake()
     {
         
@@ -16,6 +14,5 @@ public class HomeController : MonoBehaviour
     void Start()
     {
         GameDataController.initialize_progress();
-        star_count.text = "" + GameDataController.get_total_stars();
     }
 }
