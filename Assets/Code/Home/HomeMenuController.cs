@@ -11,6 +11,7 @@ public class HomeMenuController : MonoBehaviour
     public GameObject HomeMenu;
     public GameObject LevelsMenu;
     public GameObject SettingsMenu;
+    public GameObject AboutMenu;
     
     void Start() {
         instance = this;
@@ -28,8 +29,11 @@ public class HomeMenuController : MonoBehaviour
     public void ShowLevelsMenu () {
         SwitchMenu(LevelsMenu);
     }
-    public void ShowSettingssMenu () {
+    public void ShowSettingsMenu () {
         SwitchMenu(SettingsMenu);
+    }
+    public void ShowAboutMenu () {
+        SwitchMenu(AboutMenu);
     }
 
     void SwitchMenu (GameObject menu) {
@@ -37,6 +41,7 @@ public class HomeMenuController : MonoBehaviour
         HomeMenu.SetActive(false);
         LevelsMenu.SetActive(false);
         SettingsMenu.SetActive(false);
+        AboutMenu.SetActive(false);
 
         menu.SetActive(true);
     }
