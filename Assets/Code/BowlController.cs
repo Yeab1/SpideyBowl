@@ -183,7 +183,7 @@ public class BowlController : MonoBehaviour
     void grappleOnClosestBlock()
     {
         int rayCount = 15; // Number of rays in the cone
-        float coneAngle = 110f; // Total angle of the cone
+        float coneAngle = 115f; // Total angle of the cone
         float stepAngle = coneAngle / (float)(rayCount - 1);
 
         for (int i = 0; i < rayCount; i++)
@@ -196,7 +196,7 @@ public class BowlController : MonoBehaviour
             RaycastHit2D[] hits = Physics2D.RaycastAll(
                 transform.position, 
                 rayDirection, 
-                10f, 
+                12f, 
                 LayerMask.GetMask("AttachableObject"));
 
             GameObject closestAttachableObject = null;
@@ -212,6 +212,7 @@ public class BowlController : MonoBehaviour
                 {
                     closestDistance = distance;
                     closestAttachableObject = hit.transform.gameObject;
+                    continue;
                 }
             }
 

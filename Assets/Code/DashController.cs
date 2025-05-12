@@ -12,6 +12,9 @@ public class DashController : MonoBehaviour
 
             // automatically dash as soon as spice is collected
             BowlController.instance.dash();
+
+            // Destroy the spice
+            Destroy(gameObject);
         }
     }
 }
