@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8089475708972063479}
   - component: {fileID: 2209098919867739218}
   - component: {fileID: 360129521632949358}
+  - component: {fileID: 3279725733357007267}
   m_Layer: 0
   m_Name: CM Vcam
   m_TagString: Untagged
@@ -92,6 +93,21 @@ MonoBehaviour:
   zoomSpeed: 0
   currentOrthoSize: 0
   isZoomingOut: 0
+--- !u!114 &3279725733357007267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 699862588299817172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eb17424ce3094047877140330f4a748, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetAspectRatio: 2.1666667
+  targetOrthographicSize: 6
+  virtualCamera: {fileID: 2209098919867739218}
 --- !u!1 &1061331894853529285
 GameObject:
   m_ObjectHideFlags: 0

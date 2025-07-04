@@ -47,7 +47,7 @@ public class BowlController : MonoBehaviour
     {
         _distanceJoint.enabled = false;
         _rb = GetComponent<Rigidbody2D>();
-        _rb.velocity = Vector2.right * InitialSpeed;
+        _rb.linearVelocity = Vector2.right * InitialSpeed;
 
         animator = GetComponent<Animator>();
 
@@ -146,7 +146,7 @@ public class BowlController : MonoBehaviour
 
     void updateIsMoving()
     {
-        isMoving = Mathf.Abs(_rb.velocity.x) > movementThreshold;
+        isMoving = Mathf.Abs(_rb.linearVelocity.x) > movementThreshold;
     }
 
     // Updates grounded status for animations
@@ -234,13 +234,13 @@ public class BowlController : MonoBehaviour
     void jump(float force)
     {
         SoundEffectsManager.instance.PlayJumpSound();
-        _rb.velocity = new Vector2(_rb.velocity.x, force);
+        _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, force);
     }
 
     public void dash()
     {
         // apply a force to the right
-        _rb.velocity = new Vector2(1 * dashForce, _rb.velocity.y);
+        _rb.linearVelocity = new Vector2(1 * dashForce, _rb.linearVelocity.y);
         canDash = false;
     }
 
@@ -303,7 +303,7 @@ public class BowlController : MonoBehaviour
     }
 
     public void stopBowl() {
-        _rb.velocity = Vector2.zero;
+        _rb.linearVelocity = Vector2.zero;
     }
 
     public void breakBowl() {

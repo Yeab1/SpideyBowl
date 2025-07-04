@@ -12,7 +12,7 @@ public class SlowPlayerDown : MonoBehaviour
         {
             // TODO: find a new sound.
             SoundEffectsManager.instance.PlaySlipSound();
-            BowlController.instance._rb.velocity = Vector2.right * slipSpeed;
+            BowlController.instance._rb.linearVelocity = Vector2.right * slipSpeed;
         }
     }
 }
